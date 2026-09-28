@@ -1,0 +1,131 @@
+---
+slug: "why-i-built-my-own-coding-harness"
+number: "01"
+kicker: "WHY IT EXISTS"
+title: "Why I built my own coding harness"
+date: "[YYYY-MM-DD]"
+readTime: "9 MIN READ"
+standfirst: "Anyone who has used an AI assistant has seen it answer confidently and wrongly. In code, running unsupervised, that habit gets expensive. This is why I built Dev Suite, and the trade-off at the center of it."
+scene: "city"
+author: "Tyler Crawford"
+role: "Creator and sole engineer, Dev Suite"
+sections: ["Confident, and wrong", "Plausible is not true", "Where assumptions go", "The paradox", "What Dev Suite is", "What this log is"]
+sources: ["IEEE Spectrum, \"AI Slop Is Changing How Engineers Review Code,\" Sept 8, 2026.", "Anthropic, \"How we built our multi-agent research system,\" June 13, 2025.", "Anthropic, Claude Code documentation, \"Orchestrate teams of Claude Code sessions,\" read Sept 25, 2026.", "Dev Suite's own review reports and repository history, counted Sept 27, 2026."]
+next: {"label": "NEXT · ARTICLE 02", "title": "The coding-agent field in 2026, and the part nobody builds", "meta": "[DATE] · 10 MIN READ"}
+---
+
+## Confident, and wrong
+
+If you've asked an AI assistant for anything, you've seen it: an answer delivered with total confidence that turns out to be wrong, a made-up source, or a detail it assumed instead of asking. In a chat window that's an annoyance. You notice, you correct it, you move on.
+
+Now give that same assistant the keys to a codebase. Let it change files, run commands and report back on its own; that's what an AI coding agent does. Thereafter, you run five of them at once. Nobody is watching every step, and a wrong answer doesn't stay in a chat window. The consequece? It ships.
+
+<Note>**What's a pull request?** A proposed change to a codebase, submitted for review before it's merged in.</Note>
+
+This is where I found myself as of May 2026. I was in the midst of building a side project and had started running several coding agents in parallel to move faster than one person could. On May 30, the mechanics finally held: three agents, each in its own copy of the code, each opened a pull request that passed its checks, and all three merged without a conflict. By the end of that session, eight pull requests had gone through.
+
+My project's memory system recorded the result that day, and the entry wasn't a victory lap. The mechanics were solid, it said. However, there were fundamental gaps in memory and visibility. Particularly, nothing the agents learned carried into the subsequent session, and I couldn't see clearly what each one was actually doing.
+
+These gaps were symptoms. Underneath it was a problem everyone meets when allowing LLMs to run unsupervised: agents confuse what's plausible with what's true. While the obvious fix is to govern everything they do, such degrees of scrutiny throughout every facet of their work costs more than the task you set it out to do in the first place.
+
+That tension is what this article is about, and it's why I started building Dev Suite.
+
+## Plausible is not true
+
+In code, the problem has a few recurring shapes.
+
+**Agents mistake likely for true.** One lesson my project recorded says it in a single line: *"A read-only agent will state test outcomes it could not run."* An agent with no way to run the tests reported their results anyway. Confidently. It hadn't run anything. In another session, an agent explained how the system's permissions worked, with full confidence, four separate times. It was wrong every time.
+
+**Reviews inherit the same flaw.** A reviewer, human or AI, tends to check whether an explanation hangs together, not whether it's true. The most expensive bugs in this project weren't hiding in messy code; they were under confident, well-argued comments that everyone believed. In one hardening effort, independent review and live drills found 15 bugs serious enough to block release, in code that already passed every test with 100% coverage. Although coverage proves a line ran, it doesn't prove the line is right.
+
+**Even research isn't safe.** When I had agents gather sources for a coding standard, six of their eight reports contained quotes that were invented or misquoted.
+
+I'm not the only one living this.
+
+<Stats items={[["42%", "of the code developers added was written by AI, by their own estimate · IEEE Spectrum, Sept 2026"], ["96%", "don't fully trust AI-generated code to work · same survey, 1,100+ developers"], ["3×", "longer code reviews at one company after adopting AI · same report"]]} />
+
+<PullQuote>Writing code got cheap. Trusting it didn't.</PullQuote>
+
+## Where assumptions go
+
+An unchecked assumption doesn't stay small. It becomes a vulnerability or a debt, and someone pays for it later, usually at the worst time.
+
+The cheapest place to catch one is in the plan, before any code exists. Over four months, independent reviewers attacking plans caught more than 360 blocking problems before a line of code was written, across 73 specs. And then my project specific code review caught another 165 before anything merged.
+
+<BarChart title={"Where the blocking problems were caught"} tag={"MEASURED · 155 REVIEW REPORTS · JUNE–SEPT 2026"} bars={[{"label": "In the plan, before any code was written", "value": 363}, {"label": "In code review, before merging", "value": 165}]} axis={"Blocking problems found, June–September 2026"} alt={"Horizontal bar chart. 363 blocking problems were caught in plans before any code was written, and 165 more in code review before merging, June to September 2026."} caption={"Counted from 111 reviews of plans and 44 reviews of code. Problems a review withdrew or refuted are excluded, and reviews recorded only inside specs weren't counted, so both numbers are floors."} captionTag={"FIG 1"} />
+
+Here are two of the ones caught earliest.
+
+<DataTable head={["The assumption", "What it would have done", "How it was caught"]} rows={[["A tool adopted to save tokens only ran harmless commands", "One of its subcommands would run any shell command it was handed: the exact door the sandbox (the walled-off space each agent works inside) exists to close", "Its real source was checked before it was allowed in"], ["A plan to fix a shutdown failure described how the system worked", "Four of its requirements described mechanisms that didn't exist, or would have done the opposite. One \"safety\" switch would have stopped every agent instead of the one it was aimed at", "Three independent reviewers rejected the plan (44 findings upheld, none withdrawn); then a check against the real code"]]} caption={"Two assumptions caught before any code was written."} tag={"TABLE 1"} />
+
+Built as written, each of these would have shipped. Each would have surfaced later, in a live failure, which is the most expensive place to find anything.
+
+How easy is it to run into this? Unfortunately, it's the default, and companies behind the models you're paying for have no incentive of solving it for you. The best you can do is  explicitly spell out your plan in advance; and even then, assumptions will build up quietly until one you encounter a break.
+
+## The paradox
+
+Let's revisit a previous point I made about governing everything agents do for you. At the surface level, industry will tell you that the best you can do to implement governance is writing a plan precise enough that nothing is left to the agent's judgment; however, one flaw, this doesn't scale.
+
+The more you specify, the more it costs. Every instruction has to be written, kept current, and fed to every agent on every run, and each one is one more thing an agent can misread. Running agents in teams is already expensive. Take just Anthropic's models, they've measured that multi-agent systems use about fifteen times the tokens of a plain chat.
+
+To get a deterministic answer from a non-deterministic agent, you'd have to tell it everything, and telling it everything costs more than the work itself.
+
+Given this problem, the answer to governance isn't more instructions. It's guardrails in combination with a limited set of instructions that make the right answer the easiest one to reach, without spelling it out.
+
+<DataTable head={["", "Tell it everything", "Build guardrails"]} rows={[["How", "Spell out every step in instructions", "Make wrong moves impossible, or caught"], ["Cost", "Grows with every instruction, paid on every run", "Paid once, in the harness"], ["Fails when", "The agent misreads or hullucinates", "A check is missing, so you add it"], ["Who confirms the work", "The agent, by its own account", "Something outside the agent"]]} featured caption={"Two ways to get consistent work from an agent."} tag={"TABLE 2"} />
+
+Some of the guardrails are walls built into the harness:
+
+<List>
+
+- **An agent can't run a command its task didn't need.** So it never has to be told not to. Anything not granted is simply refused.
+- **An agent can't declare itself done.** Something outside it has to see the work land. In a deliberate test, an agent instructed to finish silently was stopped at the exit until it reported.
+
+</List>
+
+Others are practices every agent is briefed to follow:
+
+<List hollow>
+
+- **A reviewer gets one question, not a checklist.** The reviewer never watched the code being written and is asked one thing: what does this change do to the code around it? That one question caught a real bug in three out of three tasks.
+- **Plans are attacked before any code is written,** when a wrong assumption costs a paragraph instead of a rewrite.
+
+</List>
+
+Admittedly, despite building a plethora of guardrails and a curated set of instructions to govern my agent swarms, the practice isn't flawless. As a project grows, the way it's governed has to grow with it. Instructions can't stay static, and knowing what it takes to build a guardrail, deterministic or not, and when to use one, becomes the real bottleneck. Take cross-validation, where independent reviewers attack a plan before it's built. It's a review-type guardrail, and it costs tokens up front. That's the trade, and it's the point. It works like Minority Report: you catch the problem before it happens, before the debt exists. The real question becomes how much scrutiny you want on a piece of work before it starts down the path of being built.
+
+<PullQuote>You can't instruct an agent into being deterministic. You can build the road so the right answer is the easiest one to reach.</PullQuote>
+
+## What Dev Suite is
+
+That question, how much scrutiny and where, is what Dev Suite is built around. It's a governance harness for AI coding agents. It doesn't govern everything for you, because nothing can. What it gives you is a way to put governance into a swarm of agents from the very beginning, and to keep adjusting it as the project grows.
+
+Claude Code, Cursor and the other harnesses I'd been using made agents fast and common, and they were the inspiration for building the layer above them. Dev Suite deploys and manages the agents itself. What it adds is integrity: built in from the first step, rather than inspected at the end.
+
+Work starts as a written plan, and independent reviewers attack it before any code exists. Once it survives, it's split into slices, scoped so the agents never collide. Each agent builds its slice in its own copy of the code, inside a sandbox, with only the permissions that slice needs. When an agent says it's finished, that's a claim, not a result. Deterministic checks run outside the agent: linting, type checks, and the full back-end test suite at 100% coverage. On top of those, a reviewer who never saw the code being written gives it an adversarial review, scaled to the size of the change. Nothing merges on an agent's word.
+
+None of that is locked down. I decide what each deploy can and can't touch, which reviews run and how hard they look, and which personas, skills and MCP servers each agent gets. I green-light every deploy. While it runs, a live view shows me every agent: what it's doing, what it touched, and how it ended. If something looks wrong, I can step in at any moment.
+
+<BeforeAfter alt={"Two diagrams compared. Before: five AI agents all waiting on one person to review their work, while some changes ship unchecked. After: the same agents inside a sandbox; the person sets guardrails and green-lights the work and can step in anytime, and independent checks confirm the work before anything merges."} caption={"Where the human sits. Unmanaged, the person becomes the bottleneck, or stops reading. In Dev Suite, the person steers and the checks verify."} tag={"FIG 2"} />
+
+Governance done this way also costs less than the alternative. A handful of well-briefed agents on slices that don't overlap, working from a map of the codebase and a shared graph of the work in flight, gets more done than a crowd of agents set loose. In a measured test, the code map alone cut an agent's token use by about 40%, and even Anthropic's own documentation notes that three focused agents often outperform five scattered ones. I've seen the other side, too: twelve review agents, launched without a deliberate choice of model, burned through a full session's budget and most of a second, and returned nothing. Unmanaged agents don't just cost more. They cost more without telling you what happened.
+
+<Stats items={[["275", "pull requests merged, June 5 to Sept 25, 2026"], ["0", "rolled back"], ["~17", "merged per week, on average"]]} />
+
+Those numbers come from one rule: nothing merges until the checks pass, and a problem found after a merge is fixed forward, not rolled back.
+
+<WithNote note={"The memory is gitmem, made by nTEG Labs. I'm part of the team that builds it, and its lead beta tester."}>
+
+The last piece is memory. Every mistake is written down once and checked before the next risky step, so the same lesson doesn't have to be learned twice. One of them, never trust a claim copied from a document without checking it against the system, has been applied in review after review since. It still catches things: re-running it on a review that had already passed found another false claim.
+
+</WithNote>
+
+It runs on my own machine today, built container-first so the same structure can move to the cloud. It's weakest right now at front-end QA. And there was no smaller version of it that would have worked: each piece could be built alone, but none of them was safe alone.
+
+## What this log is
+
+This is a dated record. Each article says what I understood on its date and is never rewritten; a correction is a new article that points back. It explains the ideas without publishing the blueprint.
+
+<Stats label={"So far"} items={[["1,547", "commits, on 100 of the 113 days from June 5 to Sept 25, 2026"], ["10,267", "automated tests passing in the latest full run · Sept 25, 2026"], ["111", "adversarial reviews of plans, before any code was written · June–Sept 2026"]]} />
+
+**Can you use it?** Not yet. It's private while I finish onboarding, the part that lets it take on projects other than its own. Leave your email and I'll tell you when the beta opens.

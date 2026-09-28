@@ -1,0 +1,243 @@
+---
+slug: "the-coding-agent-field-in-2026"
+number: "02"
+kicker: "THE FIELD"
+title: "The coding-agent field in 2026, and the part nobody builds"
+date: "[YYYY-MM-DD]"
+readTime: "12 MIN READ"
+standfirst: "Agent harnesses aren't new, and I didn't build mine blind. This is an honest map of what the field already does well, what I borrowed, and the part I couldn't find anywhere. If I got something wrong, tell me."
+scene: "aurora"
+author: "Tyler Crawford"
+role: "Creator and sole engineer, Dev Suite"
+sections: ["A checkbox in someone else's product", "Give the field its due", "The part nobody documents", "The honest split", "Your own harness, your own infrastructure", "Where I'm behind"]
+sources: ["Anthropic, Claude Code documentation: \"Orchestrate teams of Claude Code sessions,\" \"Subagents\" and \"Monitoring,\" read 2026-09-28.", "Cursor: changelog 2.0 (Oct 29, 2025) and documentation for Subagents, Cloud agents and Cloud agent security, read 2026-09-28.", "OpenAI, Codex documentation (cloud environments), read 2026-09-28.", "GitHub: \"Welcome home, agents\" (the Agent HQ announcement), and the Copilot coding agent and Copilot Memory documentation, read 2026-09-28.", "Google, Jules documentation (usage limits, tasks and repositories, changelog), read 2026-09-28.", "Cognition: \"Devin can now manage Devins,\" \"Don't Build Multi-Agents,\" and the Devin Review and Knowledge documentation, read 2026-09-28.", "Imbue, Sculptor documentation (github.com/imbue-ai/sculptor), read 2026-09-28.", "OpenHands documentation (Agent Canvas, goals, hooks, persistent memory, sandboxes), read 2026-09-28.", "ByteDance, DeerFlow repository and documentation (github.com/bytedance/deer-flow), read 2026-09-28.", "OpenClaw repository and documentation (docs.openclaw.ai), read 2026-09-28.", "AWS Kiro documentation (permissions, subagents) and Kiro Crew documentation (\"Introducing Kiro Crew,\" Task Runner, Memory, System), read 2026-09-28.", "BMAD Method repository (bmad-architecture Reviewer Gate, bmad-review, bmad-build), read 2026-09-28.", "Cemri et al., \"Why Do Multi-Agent LLM Systems Fail?\" (MAST), v3, arXiv, Oct 26, 2025, §4.", "Google Cloud, \"2025 DORA Report: State of AI-assisted Software Development,\" Sept 23, 2025.", "Simon Willison, \"The lethal trifecta for AI agents,\" June 16, 2025.", "AI Incident Database, incident 1152 (Replit, July 18, 2025).", "METR, \"Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity,\" July 2025.", "Dev Suite's own review reports and repository history, counted 2026-09-27."]
+drafting: "Drafted with AI assistance from the project's own records; the opinions are mine and every number was checked against its source. As understood on [YYYY-MM-DD]."
+subscribe: "Private for now, headed for a beta. Leave your email and I'll tell you when it opens."
+next: {"label": "NEXT · ARTICLE 03", "title": "Fast and governed: one feature through Dev Suite", "meta": "[DATE] · 9 MIN READ"}
+---
+
+import grid from './article-02-the-coding-agent-field-in-2026.grid.json';
+
+## A checkbox in someone else's product
+
+Agent harnesses have been around for a while, and a lot of the basics of what you can let an agent do inside one are already well established in other products. When I started building mine, I didn't want to build blind, and there was no need to. Most of what I started with was a shopping list of features I wanted because I was used to working that way:
+
+<List>
+
+- MCP servers wired into swarms of agents;
+- several agents sandboxed side by side, each in its own copy of the code;
+- vulnerabilities caught early;
+- everything hosted locally;
+- an interface that looked good.
+
+</List>
+
+That last one mattered more than it sounds. I'm not the best front-end developer, so finding good open-source templates to work from was a real plus. The open-source harnesses out there had plenty I could learn from and adapt.
+
+The rest I had to build from scratch, and some of that has since turned into someone else's shipped feature. One editor now splits a single request across several agents automatically, all running at once. When I started, nothing I used did that. Now it's a setting.
+
+That's the shape of the whole field this year. It moved fast, and it moved fastest on the parts that were easiest to build: more agents, running at once, each with a nicer window to watch them in. By September, a lot of what I'd built was a checkbox in someone else's product. Here's what isn't.
+
+<Note>**A quick map of the field.** "First-party coding agents" live inside an editor or a command line. "Session managers" run many of them in parallel, often in the cloud. "Open-source harnesses" are free tools you run and modify yourself, often with your own models. "Spec-driven tools" start from a written plan instead of a prompt. Dev Suite tries to be honest about which of these jobs it actually does, and which it borrows.</Note>
+
+The tools got very good at running many agents at once. But almost none of them do these things:
+
+<List>
+
+- decide, before any code exists, whether the plan is even right;
+- size an agent's permissions to the one task in front of it, instead of the whole session;
+- prove a task is "done" with anything other than the agent's own report.
+
+</List>
+
+And watching is thinner than it looks. Most tools give you a transcript of what an agent said. Some export raw telemetry for you to wire into your own dashboards. Few give you one live view, out of the box, of what every agent in a team is doing, what it touched, and how it ended.
+
+## Give the field its due
+
+A comparison that doesn't concede first isn't worth reading, so first, plainly: this is a strong field, and parts of it are ahead of me.
+
+**First-party agents:**
+
+<List>
+
+- **Claude Code** runs up to twenty of its own subagents at once by default, and lets them start subagents of their own, up to three layers deep. An experimental "agent teams" mode adds a shared task list and direct messaging between agents.
+- **Cursor** can run up to eight agents in parallel on one prompt, each in its own copy of the repository or on a remote machine. It has a built-in step that breaks one request into pieces and hands them to parallel subagents automatically. That's one of the things I'd had to build myself.
+- **GitHub's Agent HQ** puts agents from several companies behind one screen, so a team can run and watch agents from more than one vendor without leaving GitHub.
+
+</List>
+
+One distinction here is easy to miss. Giving each agent its own copy of the code stops agents from overwriting each other while they work. It doesn't stop them from colliding. If two agents change the same files in their own copies, the conflict just waits until the work is merged back together, and that's where it lands. Keeping agents off each other's files takes scoping: deciding up front who owns which part of the code. Even separate copies aren't Cursor's default. Its docs say its subagents share one checkout unless you ask for isolation.
+
+**The parallel-session managers push further still:**
+
+<List>
+
+- **Cursor's cloud agents** each run in their own isolated virtual machine in the cloud.
+- **Imbue's Sculptor** gives each workspace its own copy of the code. Agents in the same workspace share it, and running everything in a container is an experimental option.
+- **Cognition's Devin** can now manage a team of other Devins, and each managed Devin gets its own machine. The coordinator:
+  - scopes the work and hands out pieces;
+  - watches spend on each one;
+  - can message any of them mid-task;
+  - can put one to sleep or end it outright.
+- **Google's Jules** runs up to sixty tasks at once, but only on its top paid tier; the free tier runs three.
+
+</List>
+
+**The open-source harnesses** deserve their own line, because a lot of the energy is there.
+
+<List>
+
+- **DeerFlow**, from ByteDance, calls itself "an open-source super agent harness that orchestrates sub-agents, memory, and sandboxes to do almost anything."
+- **OpenClaw** is a personal assistant that runs on your own computer and meets you in the chat apps you already use.
+- **OpenHands** and others sit alongside them.
+
+</List>
+
+They're free and hackable, they plug into dozens of tools through MCP, and most of them will run a model you host yourself. I learned a lot from reading them.
+
+What they're built for is reach: doing almost anything, across as many connectors as possible. For writing code specifically, governance and efficiency aren't what they put first:
+
+<List>
+
+- DeerFlow limits which tools each skill may use, which is a real start. But its docs, not only its README, don't describe checking a plan before code, gating a merge on tests, or confirming "done" from outside the agent.
+- OpenClaw runs tools directly on your machine for its main session, unless you set up sandboxing yourself.
+
+</List>
+
+None of that is a flaw for what they're for. It's just a different job. And both are moving fast: DeerFlow has added an optional, role-based permission system and a live view of its running sub-agents, and OpenClaw's control panel shows every agent and what it's working on.
+
+That's real ground, and I don't want to pretend otherwise. On isolation, a container or a machine per agent is a harder wall than mine, and that's a trade I made on purpose. In Dev Suite, each workspace gets its own sandbox, and inside it each agent's work is isolated: its own copy of the code, its own slice, its own permissions. Keeping a team of agents in one shared sandbox is far cheaper to run, track and watch than a machine for every agent, and it makes the most of whatever hardware you have. Each sandbox holds up to eight agents. Past that, Dev Suite refuses the deploy and says how many sandboxes it would take; spreading one team across several sandboxes is the next step. Separate workspaces already get a sandbox each, so different projects run side by side.
+
+<CoverageGrid data={grid} />
+
+Some cells took real digging, and a few cut against what I expected going in. Two tools come closer to the ends of the lifecycle than the rest, and they deserve the credit:
+
+<List>
+
+- **BMAD Method** runs a review gate that attacks the architecture plan before any code exists, with an adversarial reviewer switched on by default. It leaves permissions to whatever tool it runs inside.
+- **Kiro Crew**, a new orchestrator from the team behind AWS Kiro, checks each finished step with a separate reviewer that reads the actual diff rather than the agent's own report, gates it on the tests, and keeps lessons between sessions.
+
+</List>
+
+<WithNote note={"The memory in that last footnote is gitmem, made by nTEG Labs. I'm part of the team that builds it, and its lead beta tester."}>
+
+Neither covers all three ends at once, but they're the closest I found. Kiro's permission engine is also the best deny-wins system I found: a deny rule always wins, whatever its scope. But rules can also be approved by prompt in the middle of a session, and a sub-agent inherits its parent's entire rule book rather than a set sized to its own task. So on that column, the row reads "partial," not "yes." That's the kind of correction this whole series is asking for: not "it can't," just "its own docs don't describe it doing that, as of today."
+
+</WithNote>
+
+## The part nobody documents
+
+Outside evidence points at the same gap from several directions.
+
+The Multi-Agent System Failure Taxonomy (MAST) studied 1,642 real traces from seven different frameworks and sorted every failure into one of three buckets. In its third version, published in October 2025:
+
+<List>
+
+- roughly 44% were bad system design;
+- about a third were agents failing to coordinate with each other;
+- nearly a quarter were verification failures: nobody checked the work before calling it finished.
+
+</List>
+
+The industry data says the same thing at a much larger scale. Google's 2025 DORA report, a survey of nearly 5,000 technology professionals, found that AI adoption now goes with higher software delivery throughput, and still goes with lower delivery stability. Its explanation is the argument of this whole series in one line: "Without robust control systems, like strong automated testing, mature version control practices, and fast feedback loops, an increase in change volume leads to instability."
+
+<Stats items={[["19%", "slower on real coding tasks after adopting AI tools, while the developers still believed they'd been 20% faster · METR randomized trial, 16 developers, 246 tasks, 2025"], ["~1 in 4", "multi-agent failures were verification failures: the step where someone checks the work before calling it done · MAST v3, Oct 2025, 1,642 traces, 7 frameworks"], ["3", "conditions that make an agent dangerous together: it can reach private data, read content it doesn't control, and send data back out · the \"lethal trifecta,\" June 2025"]]} />
+
+The other direction is what happens when nobody's watching what an agent can reach. In July 2025, an AI assistant running inside Replit:
+
+<List>
+
+- deleted a production database during an active code freeze;
+- fabricated more than four thousand fake user records to paper over the gap;
+- told its operator a rollback wasn't possible, which wasn't true.
+
+</List>
+
+A month earlier, Simon Willison had already named the shape of that failure. An agent is dangerous when three things combine, whatever any one of them looks like alone:
+
+<List>
+
+- it can read private data;
+- it's exposed to content it doesn't control;
+- it has some way to send data back out.
+
+</List>
+
+He calls it the lethal trifecta.
+
+Put those together and you get the gap I couldn't find documented anywhere as one system:
+
+<List>
+
+- a plan attacked by independent reviewers before any code exists (I call it cross-validation), with the code reviewed the same adversarial way before it merges;
+- permissions sized to the one task in front of an agent, not the whole session;
+- "done" proven by a fact outside the agent, never by its own report;
+- one lifecycle, on one machine, that a person can watch from start to finish.
+
+</List>
+
+There's also a reason I don't expect that gap to close by itself. This part is my opinion, not something I can measure. The companies selling agent swarms get paid, one way or another, by how much their agents run. An agent that makes a mistake and then spends more tokens fixing it is, on the invoice, more business. I'm not claiming anyone designs for that. But nothing in that model rewards governance that makes agents need less. That's why I think governance belongs in a layer you own, not one you rent.
+
+## The honest split
+
+Not all eighteen of the problems this project tackled deserve equal credit, and pretending otherwise would undercut the parts that do.
+
+<DataTable head={["", "What it took", "What I say about it"]} rows={[["Trivial: don't claim it", "A shared brief every agent reads, a written checklist for what counts as \"done,\" a rule to stop and ask after repeated failures instead of looping, memory carried between sessions, a paragraph warning agents not to obey instructions hidden in what they read", "\"Like everyone building this in 2026, I have these too.\""], ["Well-trodden, a few days each", "A permission list built from the task instead of the whole session, a live view of every running agent, path rules that hold on more than one operating system, giving each agent its own copy of the code, a reviewer with no memory of writing what it's reviewing", "\"This part is known. Here's what doing it taught me.\""], ["Weeks each", "Deciding whether risky work is still safe to launch by the moment it actually starts, an honest guard against agents starting agents, checking twice that a permission really took effect, a shutdown sequence that survives a frozen engine, making many agents launch without dragging, checking whether a passing test proves anything, an engine underneath that can be swapped", "The engineering story. Each one traces to a dated incident or a measurement, not a guess."], ["Not available off the shelf", "Keeping one shared machine alive under many agents, plus the watching itself", "Cloud tools dodge this by not running on your machine. I don't get to dodge it."], ["The real moat", "Four months of dated, adversarially tested evidence: what broke, when, and what it cost to fix", "Calendar time and real incidents. Nobody can compress those into a weekend."]]} featured caption={"The honest split between what's common practice, what took real engineering, and what can't be bought off the shelf. As of [YYYY-MM-DD]."} tag={"TABLE 1"} />
+
+That split, and the habit of checking every claim against the system instead of against someone's summary of it, has an origin. In June, nine early specs went through review together, and every claim the reviewers rejected traced back to the same root cause: a sentence lifted from another document and never checked against the system it described. The fix became a standing rule: don't cite a description of the system, cite the system. It's slower. It's also the only reason a comparison like this one is worth publishing, instead of being one more table of vendor claims repeated on faith. That includes my own claims, if I get something wrong here.
+
+<UnderTheHood title={"What \"its own copy of the code\" means"}>
+
+Each agent works in its own copy of the code (a git worktree): a second working copy of the same repository that shares its history but not its files. On its own, that only postpones conflicts until the merge. What prevents them is scoping: each slice is assigned files no other slice touches, so parallel agents never collide, and in four months they never have. Isolation works at two levels. Each workspace has its own sandbox, and inside it each agent's work stays in its own copy, with its own permissions. A separate machine for each agent, the way Devin and Cursor's cloud agents do it, is a harder wall that Dev Suite gives up on purpose, for cost and for your hardware.
+
+</UnderTheHood>
+
+Cognition, which makes Devin, has gone further than most and published an essay arguing against splitting work across agents at all: splitting fragments context and produces conflicting decisions, so one linear agent is the safer default. They're right that it's a real failure mode. My answer is to settle the decisions in the plan, before any agent starts, and give each agent a slice no other agent touches. That's also why Dev Suite's agents don't talk to each other: there's nothing left for them to negotiate.
+
+And a swarm is never the default. Dev Suite doesn't deploy agents for the sake of deploying them. Starting a team takes a reason: a plan that splits cleanly, where running the pieces in parallel buys real speed or real correctness. When it doesn't, the work doesn't get split.
+
+## Your own harness, your own infrastructure
+
+There's one more thing you only get by running your own harness: you decide where it runs and what it runs on. Hosted tools pick the machines and the models for you. With your own, the same governance can sit over whatever infrastructure you have.
+
+Dev Suite is built container-first, so every agent already runs inside a sandbox you control, and the engine underneath is replaceable. Today the default engine drives the parallel workers. A second engine, OpenCode, already runs interactive agents inside the same sandbox, on a path built for your own API keys and for models you host yourself. Wiring the parallel workers to local models is next.
+
+That's where it gets interesting. A small model running in a container next to your agents doesn't send you a bill per token. The same sandbox could just as easily reach another model provider. With a personal server, or just some spare capacity on the machine you already own, you could keep agents running all the time, working on your code under your own personas. They'd have the same guardrails, the same reviews and the same live view as everything else.
+
+To be fair, owning your infrastructure is the pitch of every open-source harness. The difference here is that the governance comes with it. That's the design: moving an agent to a different engine, or to a model you host yourself, shouldn't mean giving up the plan review, the permissions, or the checks that decide when it's done.
+
+## Where I'm behind
+
+Four places, stated plainly.
+
+**Scale.** Everything runs on one machine: mine.
+
+<List>
+
+- Each sandbox is capped at eight agents, a limit set on the safe side of what the memory measurements show. Past that, the deploy is refused with the number of sandboxes it would need. Spreading one team across several sandboxes is next, and separate workspaces already run side by side, each in its own sandbox.
+- Eight isn't the most that has run. 20 agents launched at once in one measured test, and I've had as many as 35 running at once, admittedly under a lighter load.
+- Still, cloud tools that don't share my machine don't share my ceiling: Jules runs sixty tasks at once on its top tier.
+
+</List>
+
+If anyone has a small data center lying around, I know a good home for it.
+
+**Isolation.** Each workspace gets its own sandbox, and each agent's work inside it is isolated, but not with a machine per agent. That's deliberate, for cost and for your hardware. If you need the hardest wall available today, Cursor's cloud agents and Devin's managed Devins each get a machine of their own.
+
+**Polish and onboarding.** It's private for now, by choice, while I finish onboarding: the part that lets it take on projects other than its own. Onboarding a second project has been tested locally and is still being finished.
+
+**Front-end QA** is the weakest part today. The interface's unit tests run when a change touches it, but checking real behavior in a browser still runs on demand, not on every change.
+
+<PullQuote>A layer above the agents, not a rival to them.</PullQuote>
+
+None of this makes Claude Code, Cursor or the rest of the field something I'm competing with. They were the reason I started. Watching them make agents fast and common is what made me want a layer above them, one that decides:
+
+<List>
+
+- when work is allowed to start;
+- what it's allowed to touch;
+- what counts as finished.
+
+</List>
+
+Dev Suite deploys and manages the agents itself, and the engine behind each one is swappable. Building that layer was never about replacing the agents. It was about not taking their word for "done." Also, I like saving money.

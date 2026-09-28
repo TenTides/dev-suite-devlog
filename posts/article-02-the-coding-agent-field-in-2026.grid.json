@@ -1,0 +1,98 @@
+{
+  "title": "What the field ships, and what nobody documents",
+  "tag": "SOURCED · VENDOR DOCS READ 2026-09-28 · RE-VERIFY EVERY CELL WITHIN 48 HOURS OF PUBLISHING",
+  "legend": "n/d = not described in the tool's own docs.",
+  "columns": [
+    "Plan checked before code",
+    "Work split without overlap",
+    "Permissions from the task",
+    "Many agents at once",
+    "Isolated sandboxes",
+    "One live view",
+    "\"Done\" proven outside the agent",
+    "Lessons carried forward"
+  ],
+  "families": [
+    {
+      "name": "First-party coding agents",
+      "tools": "Claude Code, Cursor, Codex, GitHub Copilot",
+      "values": [
+        "partial",
+        "partial",
+        "partial",
+        "yes",
+        "yes",
+        "yes",
+        "partial",
+        "yes"
+      ]
+    },
+    {
+      "name": "Parallel-session managers",
+      "tools": "Cursor's cloud agents, Google's Jules, Devin managing Devins, Imbue's Sculptor, Kiro Crew",
+      "values": [
+        "n/d",
+        "partial",
+        "partial",
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "yes"
+      ]
+    },
+    {
+      "name": "Open-source harnesses",
+      "tools": "OpenHands, DeerFlow, OpenClaw",
+      "values": [
+        "n/d",
+        "n/d",
+        "partial",
+        "yes",
+        "partial",
+        "yes",
+        "partial",
+        "partial"
+      ]
+    },
+    {
+      "name": "Spec-driven tools",
+      "tools": "BMAD Method, AWS Kiro",
+      "values": [
+        "yes",
+        "partial",
+        "partial",
+        "yes",
+        "partial",
+        "n/d",
+        "partial",
+        "partial"
+      ]
+    },
+    {
+      "name": "Dev Suite",
+      "tools": "",
+      "values": [
+        "yes",
+        "yes",
+        "yes",
+        "yes",
+        "partial",
+        "yes",
+        "yes",
+        "yes"
+      ]
+    }
+  ],
+  "footnotes": [
+    "A row scores \"yes\" when at least one of its tools documents the feature as a default or first-class part of the product.",
+    "Dev Suite caps each sandbox at eight agents, a deliberately safe limit. A bigger roster is refused with the number of sandboxes it would need; spreading one team across several is next. Each workspace gets its own sandbox. Ten agents have launched at once in a measured test, and fifteen have run at once under a lighter load.",
+    "Each workspace has its own sandbox. Inside it, each agent's work is isolated in its own copy of the code, with its own permissions, rather than on a machine of its own.",
+    "Its slices are scoped from the start so agents never collide, and in four months they never have. The scoping is by design, not a tool-level wall.",
+    "Fresh-context review and done-on-exit are built; a live working/done status built from outside facts is still in progress.",
+    "Its lessons are carried by gitmem, made by nTEG Labs. The author is part of the team that builds it, and its lead beta tester."
+  ],
+  "alt": "An eight-column grid scoring five tool families against eight parts of an agent's working lifecycle. Every family scores well on running many agents at once. Spec-driven tools score a full mark on checking the plan before code, and session managers on proving work is done outside the agent. Dev Suite is the only row with a full mark on all three of plan, permissions from the task, and \"done\" proven outside the agent.",
+  "caption": "What the field ships, and what nobody documents as one system, as of September 2026. Some families reach one end of the lifecycle or the other. None but one covers all three: checking the plan, sizing permissions to the task, and proving \"done\". As of [YYYY-MM-DD].",
+  "captionTag": "FIG 1"
+}
