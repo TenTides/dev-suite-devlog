@@ -10,6 +10,26 @@ import SiteHeader from '../../components/SiteHeader.jsx';
 import SiteFooter from '../../components/SiteFooter.jsx';
 import * as W from '../../components/article/Widgets.jsx';
 import NotFound from '../NotFound.jsx';
+
+// Headings get ids s1..sN from the post's section list, matched by their text. The component
+// must be defined once (not per render), or React remounts every heading on each update.
+const SectionsCtx = React.createContext([]);
+const textOf = (c) => (typeof c === 'string' ? c : Array.isArray(c) ? c.map(textOf).join('') : c && c.props ? textOf(c.props.children) : '');
+function H2({ children }) {
+  const sections = React.useContext(SectionsCtx);
+  const t = textOf(children).trim();
+  const i = sections.findIndex((s) => s.trim() === t);
+  const n = i < 0 ? '' : String(i + 1);
+  return <h2 id={n ? 's' + n : undefined}><span className="h2-n">{n ? '0' + n : ''}</span>{children}</h2>;
+}
+function A({ href, children }) {
+  return href && href.startsWith('/') ? <Link to={href}>{children}</Link> : <a href={href}>{children}</a>;
+}
+const COMPONENTS = {
+  h2: H2, a: A,
+  Note: W.Note, Stats: W.Stats, PullQuote: W.PullQuote, List: W.List, WithNote: W.WithNote, DataTable: W.DataTable,
+  BarChart: W.BarChart, BeforeAfter: W.BeforeAfter, CoverageGrid: W.CoverageGrid, UnderTheHood: W.UnderTheHood,
+};
 import './article.css';
 
 const SCENE_COLORS = ['#3a3935', '#6f6c66', '#c9f5e0', '#2fb57e'];
@@ -181,8 +201,8 @@ export default function ArticlePage() {
   useEffect(() => {
     if (!post) return undefined;
     document.title = post.title + ' · Dev Log';
-    const hs = Array.from(document.querySelectorAll('.prose h2[id]'));
     const onScroll = () => {
+      const hs = Array.from(document.querySelectorAll('.prose h2[id]'));
       let a = 0;
       hs.forEach((h, i) => { if (h.getBoundingClientRect().top < window.innerHeight * 0.35) a = i; });
       setActive(a);
@@ -203,23 +223,13 @@ export default function ArticlePage() {
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('resize', onScroll);
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
   }, [post]);
 
   if (!post) return <NotFound />;
   const { Content } = post;
   const sections = post.sections || [];
-  let h2i = 0;
-  const components = {
-    h2: ({ children }) => {
-      const i = h2i++;
-      return <h2 id={'s' + (i + 1)}><span className="h2-n">{'0' + (i + 1)}</span>{children}</h2>;
-    },
-    a: ({ href, children }) => (href && href.startsWith('/') ? <Link to={href}>{children}</Link> : <a href={href}>{children}</a>),
-    table: (p) => <table className="tbl" {...p} />,
-    Note: W.Note, Stats: W.Stats, PullQuote: W.PullQuote, List: W.List, WithNote: W.WithNote, DataTable: W.DataTable,
-    BarChart: W.BarChart, BeforeAfter: W.BeforeAfter, CoverageGrid: W.CoverageGrid, UnderTheHood: W.UnderTheHood,
-  };
   const label = sections[active] ? '0' + (active + 1) + ' / 0' + sections.length + ' · ' + sections[active].toUpperCase() : '';
   return (
     <div className="article-page">
@@ -236,9 +246,11 @@ export default function ArticlePage() {
       <div className="a-grid">
         {phone ? null : <aside className="a-aside"><div className={'a-aside-in' + (asideOff ? ' off' : '')}><Toc sections={sections} active={active} /><Share post={post} /></div></aside>}
         <article ref={artRef} className="prose">
-          <MDXProvider components={components}>
-            <Content components={components} />
-          </MDXProvider>
+          <SectionsCtx.Provider value={sections}>
+            <MDXProvider components={COMPONENTS}>
+              <Content components={COMPONENTS} />
+            </MDXProvider>
+          </SectionsCtx.Provider>
           {post.sources ? (
             <div className="sources">
               <span className="chip">SOURCES</span>

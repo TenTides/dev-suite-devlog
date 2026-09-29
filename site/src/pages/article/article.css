@@ -103,8 +103,8 @@
 @keyframes growx { from { transform: scaleX(0); } }
 
 /* Breakout figures (slider, coverage grid) */
-.breakout { margin: 16px 0 8px calc(-1 * var(--bl)); width: calc(100% + var(--bl) + var(--br)); }
-.breakout > .cap { padding-right: var(--bl); }
+.breakout { --bw: min(1218px, calc(2 * (100vw - 810px))); margin: 16px 0 8px calc((100% - var(--bw)) / 2); width: var(--bw); }
+.breakout > .cap { max-width: 760px; }
 
 /* Before / after slider */
 .ba-desk { border: 1px solid var(--line-2); padding: 8px; background: #0e0e0d; }
@@ -205,14 +205,19 @@
 
 .m-tools { padding: 28px 16px 0; display: flex; flex-direction: column; gap: 14px; }
 
-/* Narrow desktops: no room for margin notes or the full breakout */
-@media (max-width: 1279px) {
-  .article-page { --bl: 0px; }
-  .a-grid { padding: 72px 40px 0; grid-template-columns: 200px minmax(0, 1fr); gap: 48px; }
-  .a-grid > div[aria-hidden] { display: none; }
+/* Margin notes need the full 1440px width beside the text; below it they sit inline */
+@media (max-width: 1439px) {
   .with-note { display: flex; flex-direction: column; gap: 16px; }
   .margin-note { position: static; width: auto; border-left: 2px solid var(--signal); padding: 2px 0 2px 14px; font-size: 14px; }
   .margin-tick { display: none; }
+}
+
+/* Narrow desktops: no room for the full breakout */
+@media (max-width: 1279px) {
+  .article-page { --bl: 0px; }
+  .breakout { --bw: 100%; margin-left: 0; width: 100%; }
+  .a-grid { padding: 72px 40px 0; grid-template-columns: 200px minmax(0, 1fr); gap: 48px; }
+  .a-grid > div[aria-hidden] { display: none; }
   .grid-box .cov { min-width: 980px; }
   .grid-box { overflow-x: auto; }
   .a-hero { padding: 72px 40px 0; }

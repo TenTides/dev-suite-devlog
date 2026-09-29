@@ -453,12 +453,13 @@ export default class Component extends DCLogic {
     }
     put(LX, 10, '[', 2); put(LX + 1, 10, ']', 2); put(LX, 11, '|', 1); put(LX + 1, 11, '|', 1);
     for (let x = LX - 8; x <= LX + 8; x++) { if (x < W) put(x, 12, Math.abs(x - LX) === 8 ? (x < LX ? '/' : '\\') : (hh(x, 17) < 0.5 ? '^' : 'n'), 1); if (Math.abs(x - LX) < 7 && x < W) put(x, 13, hh(x, 18) < 0.4 ? '^' : '-', 1); }
+    // Site edit: the beam sweeps both ways, so on wide screens it also crosses the open water
+    // to the right of the lighthouse.
     const phi = T * 0.45, cph = Math.cos(phi);
-    if (cph < 0) {
-      const len = Math.round(95 * -cph);
+    const beam = (dir, len) => {
       for (let j = 3; j < len; j++) {
-        const yc = 3 + j * 0.055, half = 0.4 + j * 0.075, x = LX - 1 - j;
-        if (x < 0) break;
+        const yc = 3 + j * 0.055, half = 0.4 + j * 0.075, x = dir < 0 ? LX - 1 - j : LX + 1 + j;
+        if (x < 0 || x >= W) break;
         for (let y = Math.round(yc - half); y <= Math.round(yc + half); y++) {
           if (y < 0 || y >= R) continue;
           const cur = G[y][x];
@@ -469,9 +470,10 @@ export default class Component extends DCLogic {
           else if (hh(x, y) < 0.45 - j * 0.004) put(x, y, '·', j < 30 ? 2 : 1);
         }
       }
-    } else if (cph > 0.3) {
-      for (let j = 2; j < 8; j++) put(LX + 1 + j, 3, j < 5 ? '=' : '-', j < 5 ? 3 : 2);
-    }
+    };
+    if (cph < 0) beam(-1, Math.round(95 * -cph));
+    else if (W - LX > 12) beam(1, Math.round(Math.min(95, W - LX - 2) * cph));
+    else if (cph > 0.3) for (let j = 2; j < 8; j++) put(LX + 1 + j, 3, j < 5 ? '=' : '-', j < 5 ? 3 : 2);
     put(LX - 2, 3, lampOn > 0.6 ? '(' : ' ', 2); put(LX + 2, 3, lampOn > 0.6 ? ')' : ' ', 2);
     const yachtR = ['          _|_          ', '     ____/[_]\\____     ', ' ___/_[]_[]_[]_[]_\\___ ', ' \\  o  o  o  o  o    / ', '  \\__________________/  '];
     const YW = yachtR[0].length, span = PX - O - 6 - YW - 2;
