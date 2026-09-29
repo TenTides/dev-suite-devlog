@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function LicensingDesktopView({ v }) {
   return (
     <div style={{ width: "100%", boxSizing: "border-box", position: "relative", overflow: "hidden", background: "#0b0b0a", color: "#ededE8", fontFamily: "'Geist', sans-serif", isolation: "isolate" }} className="board-root">
-      <header style={{ height: "72px", boxSizing: "border-box", padding: "0 40px", display: "flex", alignItems: "center", gap: "40px", borderBottom: "1px solid #1d1d1b", background: "#0b0b0a" }}>
+      <header style={{ height: "72px", boxSizing: "border-box", padding: "0 var(--gx40)", display: "flex", alignItems: "center", gap: "40px", borderBottom: "1px solid #1d1d1b", background: "#0b0b0a" }}>
         <Link to="/" aria-label="dev/suite home" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <svg width="30" height="30" viewBox="0 0 48 48" fill="none" aria-hidden="true">
             <path d="M19 8H10V40H19" stroke="#ededE8" strokeWidth="5" />
@@ -41,7 +41,7 @@ export default function LicensingDesktopView({ v }) {
           {"Join the waitlist"}
         </Link>
       </header>
-      <section style={{ padding: "120px 80px 96px", display: "flex", flexDirection: "column", gap: "24px", borderBottom: "1px solid #1d1d1b" }}>
+      <section style={{ padding: "120px var(--gx) 96px", display: "flex", flexDirection: "column", gap: "24px", borderBottom: "1px solid #1d1d1b" }}>
         <span className="rise" style={{ fontFamily: "'Geist Mono', monospace", fontSize: "12px", letterSpacing: "0.22em", color: "#1fbf7f" }}>
           {"LICENSING & PRIVACY"}
         </span>
@@ -60,7 +60,7 @@ export default function LicensingDesktopView({ v }) {
           </a>
         </nav>
       </section>
-      <section id="licensing" style={{ padding: "112px 80px", display: "flex", flexDirection: "column", gap: "48px", borderBottom: "1px solid #1d1d1b" }}>
+      <section id="licensing" style={{ padding: "112px var(--gx)", display: "flex", flexDirection: "column", gap: "48px", borderBottom: "1px solid #1d1d1b" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "12px", letterSpacing: "0.22em", color: "#1fbf7f" }}>
             {"01 / LICENSING"}
@@ -217,7 +217,7 @@ export default function LicensingDesktopView({ v }) {
           </a>
         </div>
       </section>
-      <section id="privacy" style={{ padding: "112px 80px 120px", display: "flex", flexDirection: "column", gap: "40px" }}>
+      <section id="privacy" style={{ padding: "112px var(--gx) 120px", display: "flex", flexDirection: "column", gap: "40px" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "12px", letterSpacing: "0.22em", color: "#1fbf7f" }}>
             {"PRIVACY"}
@@ -357,7 +357,7 @@ export default function LicensingDesktopView({ v }) {
           {"AS OF [YYYY-MM-DD]"}
         </span>
       </section>
-      <footer style={{ position: "relative", boxSizing: "border-box", padding: "40px 80px 32px", borderTop: "1px solid #1d1d1b", display: "flex", flexDirection: "column", gap: "28px", background: "#0b0b0a" }}>
+      <footer style={{ position: "relative", boxSizing: "border-box", padding: "40px var(--gx) 32px", borderTop: "1px solid #1d1d1b", display: "flex", flexDirection: "column", gap: "28px", background: "#0b0b0a" }}>
         <nav style={{ display: "flex", gap: "32px", fontSize: "14px" }}>
           <Link to="/#articles" style={{ color: "#9a978f" }}>
             {"Articles"}

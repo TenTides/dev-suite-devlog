@@ -4,10 +4,12 @@ import Logic, { defaults } from './AboutLogic.js';
 import View from './AboutView.jsx';
 import SiteHeader from '../../components/SiteHeader.jsx';
 import SiteFooter from '../../components/SiteFooter.jsx';
+import { useViewportWidth } from '../../useViewportWidth.js';
 import './about.css';
 
 export default function AboutPage() {
-  const v = useDC(Logic, defaults);
+  const width = useViewportWidth();
+  const v = useDC(Logic, { ...defaults, width });
   return (
     <div className="about">
       <div className="phone-only"><SiteHeader /></div>

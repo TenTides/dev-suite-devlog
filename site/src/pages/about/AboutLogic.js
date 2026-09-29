@@ -144,7 +144,8 @@ export default class Component extends DCLogic {
     } else if (kind === 'highway') {
       stars(R - 16, 0.012);
       const SB = R - 12;
-      let x0 = 104, n = 0;
+      const O = Math.round((W - 200) / 2);
+      let x0 = 104 + O, n = 0;
       while (x0 < W) {
         const w = 3 + Math.floor(hh(n, 7) * 5), h = 2 + Math.floor(hh(n, 8) * 7), top = SB - h;
         for (let x = x0; x < x0 + w && x < W; x++) {
@@ -157,7 +158,7 @@ export default class Component extends DCLogic {
       const RT = R - 10, E1 = R - 9, E2 = R - 8, DV = R - 7, W1 = R - 6, W2 = R - 5, RB = R - 4;
       for (let x = 0; x < W; x++) { put(x, RT, '_', 1); put(x, RB, '=', 1); if (x % 6 < 3) put(x, DV, '-', 1); for (let y = RB + 1; y < R; y++) if (hh(x, y) < 0.06) put(x, y, '.', 1); }
       for (let lx = 14; lx < W; lx += 34) { for (let y = RT - 4; y < RT; y++) put(lx, y, '|', 1); put(lx, RT - 5, '_', 1); put(lx + 1, RT - 5, '*', 4); put(lx + 1, RT - 4, '.', 3); put(lx + 2, RT - 3, '.', 2); }
-      const GX = 126, GW = 16;
+      const GX = 126 + O, GW = 16;
       let busy = false;
       const lanes = [[E1, 6.2, 1], [E2, 4.4, 1], [W1, -4.8, -1], [W2, -6.6, -1]];
       lanes.forEach(([y, v, dir], li) => {
@@ -185,7 +186,10 @@ export default class Component extends DCLogic {
     }
     return { dim: dim, mid: mid, hi: hi, acc: acc };
   }
-  bgCfg() { return [{ key: 'fMiles', kind: 'ripple-edge', W: 200, R: 40 }, { key: 'fContact', kind: 'ripple', W: 200, R: 64 }]; }
+  // Site edit: fields span the whole viewport. `cols` is the viewport width in 12px mono
+  // columns; O shifts the fixed 200-column composition so it stays centred on the page.
+  cols() { return Math.max(200, Math.ceil((this.props.width || 1440) / 7.2) + 1); }
+  bgCfg() { return [{ key: 'fMiles', kind: 'ripple-edge', W: this.cols(), R: 40 }, { key: 'fContact', kind: 'ripple', W: this.cols(), R: 64 }]; }
   startBg() {
     this.fT = 0;
     if (false) this.bgIv = setInterval(() => { this.fT += 1; this.setState({ fTick: this.fT }); }, 70);
@@ -242,16 +246,16 @@ export default class Component extends DCLogic {
   }
   bgVals() {
     const tick = this.state.t || 0;
-    if (this._fKey !== tick) {
+    if (this._fKey !== tick + ':' + this.cols()) {
       const T = tick * 0.11, out = {};
       this.bgCfg().forEach((f) => { out[f.key] = this.fieldGen(f.kind, f.W, f.R, T); });
-      this._fields = out; this._fKey = tick;
+      this._fields = out; this._fKey = tick + ':' + this.cols();
     }
     return this._fields;
   }
   roadVals() {
     const t = this.state.t;
-    if (this._rdKey !== t) { this._rd = this.sceneGen('highway', 200, 56, t * 0.1); this._rdKey = t; }
+    if (this._rdKey !== t + ':' + this.cols()) { this._rd = this.sceneGen('highway', this.cols(), 56, t * 0.1); this._rdKey = t + ':' + this.cols(); }
     return this._rd;
   }
   renderVals() {

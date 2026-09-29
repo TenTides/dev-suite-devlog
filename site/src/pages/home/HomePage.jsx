@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDC } from '../../dc/runtime.js';
 import { usePhone } from '../../useMedia.js';
 import { articles } from '../../content/posts.js';
+import { useViewportWidth } from '../../useViewportWidth.js';
 import DeskLogic, { defaults as dd } from './HomeDesktopLogic.js';
 import PhoneLogic, { defaults as pd } from './HomePhoneLogic.js';
 import DeskView from './HomeDesktopView.jsx';
@@ -21,8 +22,10 @@ function useDeskZoom() {
 }
 
 function Desk() {
-  const v = useDC(DeskLogic, { ...dd, articles });
   const zoom = useDeskZoom();
+  const vw = useViewportWidth();
+  // Below 1440px the board is zoomed, so its fields keep their designed 200 columns.
+  const v = useDC(DeskLogic, { ...dd, articles, width: zoom < 1 ? 1440 : vw });
   return <div style={zoom < 1 ? { zoom } : undefined}><DeskView v={v} /></div>;
 }
 function Phone() { return <PhoneView v={useDC(PhoneLogic, { ...pd, articles })} />; }

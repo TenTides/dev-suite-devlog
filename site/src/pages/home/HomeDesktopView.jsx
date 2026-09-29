@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default function HomeDesktopView({ v }) {
   return (
     <div style={{ width: "100%", boxSizing: "border-box", position: "relative", overflow: "hidden", background: "#0b0b0a", color: "#ededE8", fontFamily: "'Geist', sans-serif", isolation: "isolate" }} className="board-root">
-      <header style={{ position: "absolute", top: "0", left: "0", right: "0", zIndex: "5", height: "72px", boxSizing: "border-box", padding: "0 40px", display: "flex", alignItems: "center", gap: "40px", borderBottom: "1px solid #1d1d1b", background: "rgba(11,11,10,0.72)", backdropFilter: "blur(12px)" }}>
+      <header style={{ position: "absolute", top: "0", left: "0", right: "0", zIndex: "5", height: "72px", boxSizing: "border-box", padding: "0 var(--gx40)", display: "flex", alignItems: "center", gap: "40px", borderBottom: "1px solid #1d1d1b", background: "rgba(11,11,10,0.72)", backdropFilter: "blur(12px)" }}>
         <Link to="/" aria-label="dev/suite home" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <svg width="30" height="30" viewBox="0 0 48 48" fill="none" aria-hidden="true">
             <path d="M19 8H10V40H19" stroke="#ededE8" strokeWidth="5" />
@@ -68,7 +68,7 @@ export default function HomeDesktopView({ v }) {
             ))}
           </div>
         </div>
-        <div style={{ position: "relative", zIndex: "2", padding: "144px 80px 0", display: "flex", flexDirection: "column", gap: "26px", maxWidth: "1000px" }}>
+        <div style={{ position: "relative", zIndex: "2", padding: "144px var(--gx) 0", display: "flex", flexDirection: "column", gap: "26px", maxWidth: "1000px" }}>
           <span className="rise" style={{ alignSelf: "flex-start", display: "flex", alignItems: "center", gap: "10px", fontFamily: "'Geist Mono', monospace", fontSize: "12px", letterSpacing: "0.18em", color: "#b9b6ae", border: "1px solid #2f2e2b", background: "rgba(11,11,10,0.8)", padding: "8px 12px" }}>
             <span className="pulse" style={{ width: "7px", height: "7px", background: "#1fbf7f" }} />
             {"PRIVATE SOFTWARE \u00b7 PUBLIC NOTES"}
@@ -214,7 +214,7 @@ export default function HomeDesktopView({ v }) {
             {"FIELD 01 \u00b7 METEORS"}
           </span>
         </div>
-        <div style={{ padding: "0 80px", marginBottom: "110px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+        <div style={{ padding: "0 var(--gx)", marginBottom: "110px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
             <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "12px", letterSpacing: "0.22em", color: "#1fbf7f" }}>
               {"01 / LATEST"}
@@ -238,7 +238,7 @@ export default function HomeDesktopView({ v }) {
             </button>
           </div>
         </div>
-        <div style={{ paddingLeft: "80px", overflow: "hidden" }}>
+        <div style={{ paddingLeft: "var(--gx)", overflow: "hidden" }}>
           <div style={{ display: "flex", gap: "24px", transform: `translateX(-${v.offset ?? ""}px)`, transition: "transform 700ms cubic-bezier(.2,.8,.2,1)" }}>
             {(v.articles || []).map((a, a__i) => (
               <React.Fragment key={a__i}>
@@ -280,7 +280,7 @@ export default function HomeDesktopView({ v }) {
             ))}
           </div>
         </div>
-        <div style={{ padding: "0 80px", display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: "8px" }}>
+        <div style={{ padding: "0 var(--gx)", display: "grid", gridTemplateColumns: `repeat(${(v.segs || []).length || 1}, minmax(0, 1fr))`, gap: "8px" }}>
           {(v.segs || []).map((s, s__i) => (
             <React.Fragment key={s__i}>
               <button type="button" aria-label={s?.label} onClick={s?.go} style={{ height: "28px", padding: "0", background: "transparent", border: "0", cursor: "pointer", display: "flex", alignItems: "center" }}>
@@ -292,7 +292,7 @@ export default function HomeDesktopView({ v }) {
           ))}
         </div>
       </section>
-      <section style={{ position: "relative", padding: "140px 80px", borderBottom: "1px solid #1d1d1b", overflow: "hidden", background: "#0b0b0a" }}>
+      <section style={{ position: "relative", padding: "140px var(--gx)", borderBottom: "1px solid #1d1d1b", overflow: "hidden", background: "#0b0b0a" }}>
         <div aria-hidden="true" style={{ position: "absolute", left: "0", top: "0", right: "0", bottom: "0", fontFamily: "'Geist Mono', monospace", fontSize: "12px", lineHeight: "16px", whiteSpace: "pre", color: "#25312b", pointerEvents: "none" }}>
           {(v.bgRows || []).map((r, r__i) => (
             <React.Fragment key={r__i}>
@@ -424,7 +424,7 @@ export default function HomeDesktopView({ v }) {
           </span>
         </div>
       </section>
-      <section style={{ padding: "120px 80px", display: "flex", flexDirection: "column", gap: "44px", borderBottom: "1px solid #1d1d1b", position: "relative", overflow: "hidden", isolation: "isolate" }}>
+      <section style={{ padding: "120px var(--gx)", display: "flex", flexDirection: "column", gap: "44px", borderBottom: "1px solid #1d1d1b", position: "relative", overflow: "hidden", isolation: "isolate" }}>
         <div aria-hidden="true" style={{ position: "absolute", left: "0", top: "0", right: "0", bottom: "0", zIndex: "-1", overflow: "hidden", pointerEvents: "none", fontFamily: "'Geist Mono', monospace", fontSize: "12px", lineHeight: "16px", whiteSpace: "pre", textShadow: "none" }}>
           <div style={{ position: "absolute", inset: "0", color: "#3a3935" }}>
             {(v.fArch?.dim || []).map((r, r__i) => (
@@ -517,7 +517,7 @@ export default function HomeDesktopView({ v }) {
           </a>
         </div>
       </section>
-      <section id="follow" style={{ position: "relative", padding: "120px 80px", display: "grid", gridTemplateColumns: "minmax(0, 1fr) 560px", gap: "80px", overflow: "hidden", isolation: "isolate" }}>
+      <section id="follow" style={{ position: "relative", padding: "120px var(--gx)", display: "grid", gridTemplateColumns: "minmax(0, 1fr) 560px", gap: "80px", overflow: "hidden", isolation: "isolate" }}>
         <div aria-hidden="true" style={{ position: "absolute", left: "0", top: "0", right: "0", bottom: "0", zIndex: "-1", overflow: "hidden", pointerEvents: "none", fontFamily: "'Geist Mono', monospace", fontSize: "12px", lineHeight: "16px", whiteSpace: "pre", textShadow: "none" }}>
           <div style={{ position: "absolute", inset: "0", color: "#1f2d26" }}>
             {(v.fFollow?.dim || []).map((r, r__i) => (
@@ -636,7 +636,7 @@ export default function HomeDesktopView({ v }) {
           </div>
         </form>
       </section>
-      <footer style={{ position: "relative", boxSizing: "border-box", padding: "48px 80px 36px", borderTop: "1px solid #1d1d1b", display: "flex", flexDirection: "column", gap: "40px", background: "#0b0b0a" }}>
+      <footer style={{ position: "relative", boxSizing: "border-box", padding: "48px var(--gx) 36px", borderTop: "1px solid #1d1d1b", display: "flex", flexDirection: "column", gap: "40px", background: "#0b0b0a" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <svg width="26" height="26" viewBox="0 0 48 48" fill="none" aria-hidden="true">

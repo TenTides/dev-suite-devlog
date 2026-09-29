@@ -23,6 +23,7 @@ function Hero({ post, phone }) {
   const t = useTick(ref);
   const w = useWidth(ref);
   const [textRows, setTextRows] = useState(phone ? 30 : 36);
+  const [textBox, setTextBox] = useState({ left: 80, width: 827 });
   const fs = phone ? 11 : 12, lh = phone ? 14 : 16, cw = fs * 0.6;
   useLayoutEffect(() => {
     const el = textRef.current;
@@ -30,6 +31,7 @@ function Hero({ post, phone }) {
     const ro = new ResizeObserver(() => {
       const top = phone ? 36 : 72;
       setTextRows(Math.ceil((el.offsetHeight + top + 8) / lh));
+      setTextBox({ left: el.offsetLeft, width: Math.min(el.offsetWidth, 840) });
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -40,8 +42,8 @@ function Hero({ post, phone }) {
   const Wc = Math.max(40, Math.ceil((w || (phone ? 390 : 1440)) / cw) + 1);
   const tz = phone
     ? (kind === 'aurora' ? { x: Wc, y: textRows, ay: textRows - 1, ax: 0.04, mh: 0.4 } : { x: Wc, y: textRows })
-    : { x: Math.min(Wc, Math.round(907 / cw)), y: textRows };
-  const layers = useMemo(() => sceneGen(kind, Wc, R, t * 0.11, tz), [kind, Wc, R, t, tz.x, tz.y]);
+    : { x0: Math.floor(textBox.left / cw) - 3, x: Math.min(Wc, Math.ceil((textBox.left + textBox.width) / cw) + 1), y: textRows };
+  const layers = useMemo(() => sceneGen(kind, Wc, R, t * 0.11, tz), [kind, Wc, R, t, tz.x, tz.y, tz.x0]);
   return (
     <section ref={ref} className="a-hero" style={{ height: R * lh }}>
       <AsciiLayers layers={layers} colors={SCENE_COLORS} fontSize={fs} lineHeight={lh} />
@@ -173,6 +175,7 @@ export default function ArticlePage() {
   const phone = usePhone();
   const [active, setActive] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [asideOff, setAsideOff] = useState(false);
   const artRef = useRef(null);
 
   useEffect(() => {
@@ -183,6 +186,15 @@ export default function ArticlePage() {
       let a = 0;
       hs.forEach((h, i) => { if (h.getBoundingClientRect().top < window.innerHeight * 0.35) a = i; });
       setActive(a);
+      const aside = document.querySelector('.a-aside-in');
+      if (aside) {
+        const ar = aside.getBoundingClientRect();
+        const hit = Array.from(document.querySelectorAll('.prose .breakout')).some((f) => {
+          const r = f.getBoundingClientRect();
+          return r.left < ar.right && r.bottom > ar.top - 16 && r.top < ar.bottom + 16;
+        });
+        setAsideOff(hit);
+      }
       const el = artRef.current;
       if (el) {
         const r = el.getBoundingClientRect();
@@ -222,7 +234,7 @@ export default function ArticlePage() {
       <Hero post={post} phone={phone} />
       {phone ? <div className="m-tools"><Share post={post} /><Toc sections={sections} active={active} phone /></div> : null}
       <div className="a-grid">
-        {phone ? null : <aside className="a-aside"><div className="a-aside-in"><Toc sections={sections} active={active} /><Share post={post} /></div></aside>}
+        {phone ? null : <aside className="a-aside"><div className={'a-aside-in' + (asideOff ? ' off' : '')}><Toc sections={sections} active={active} /><Share post={post} /></div></aside>}
         <article ref={artRef} className="prose">
           <MDXProvider components={components}>
             <Content components={components} />

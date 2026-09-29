@@ -21,9 +21,12 @@ export default class Component extends DCLogic {
       this.setState(up);
     }, 80);
   }
+  // Site edit: fields span the whole viewport. `cols` is the viewport width in 12px mono
+  // columns; O shifts the fixed 200-column composition so it stays centred on the page.
+  cols() { return Math.max(200, Math.ceil((this.props.width || 1440) / 7.2) + 1); }
   componentWillUnmount() { clearInterval(this.iv); this.stopBg(); }
   field() {
-    const W = 200, H = 47, ramp1 = ' .·:', ramp2 = '-=+*', ramp3 = '#%@';
+    const W = this.cols(), H = 47, ramp1 = ' .·:', ramp2 = '-=+*', ramp3 = '#%@';
     const T = this.state.t * 0.09, mx = this.state.mx, my = this.state.my;
     const dim = [], mid = [], hi = [];
     for (let y = 0; y < H; y++) {
@@ -127,11 +130,11 @@ export default class Component extends DCLogic {
     return 'M' + ax + ' ' + sy + ' C' + ax + ' ' + my + ' ' + bx + ' ' + my + ' ' + bx + ' ' + ey;
   }
   bgField() {
-    const W = 200, H = 76, T = this.state.t * 0.06, rows = [];
+    const W = this.cols(), H = 76, T = this.state.t * 0.06, rows = [], O = Math.round((W - 200) / 2);
     for (let y = 0; y < H; y++) {
       let row = '';
       for (let x = 0; x < W; x++) {
-        const x2 = x * 0.5;
+        const x2 = (x - O) * 0.5;
         const r1 = Math.sqrt((x2 - 92) * (x2 - 92) + (y - 4) * (y - 4));
         const r2 = Math.sqrt((x2 - 4) * (x2 - 4) + (y - 72) * (y - 72));
         const f1 = ((r1 * 0.12 - T) % 1 + 1) % 1;
@@ -139,7 +142,7 @@ export default class Component extends DCLogic {
         let ch = ' ';
         if (r1 < 64 && f1 < 0.11) ch = r1 < 30 ? ':' : '·';
         else if (r2 < 56 && f2 < 0.11) ch = r2 < 26 ? ':' : '·';
-        else if (x % 25 === 12 && y % 12 === 6) ch = '+';
+        else if (((x - O) % 25 + 25) % 25 === 12 && y % 12 === 6) ch = '+';
         row += ch;
       }
       rows.push(row);
@@ -198,7 +201,7 @@ export default class Component extends DCLogic {
       toggleTour: () => this.setState({ tour: !this.state.tour })
     };
   }
-  bgCfg() { return [{ key: 'fFeat', kind: 'meteors', W: 200, R: 72 }, { key: 'fArch', kind: 'marina', W: 200, R: 84 }, { key: 'fFollow', kind: 'ripple', W: 200, R: 44 }]; }
+  bgCfg() { return [{ key: 'fFeat', kind: 'meteors', W: this.cols(), R: 72 }, { key: 'fArch', kind: 'marina', W: this.cols(), R: 84 }, { key: 'fFollow', kind: 'ripple', W: this.cols(), R: 44 }]; }
   startBg() {
     this.fT = 0;
     if (false) this.bgIv = setInterval(() => { this.fT += 1; this.setState({ fTick: this.fT }); }, 70);
@@ -211,7 +214,7 @@ export default class Component extends DCLogic {
     const inb = (x, y) => x >= 0 && x < W && y >= 0 && y < R;
     const put = (x, y, ch, l) => { if (inb(x, y)) { G[y][x] = ch; L[y][x] = l; } };
     const solid = (x, y) => { if (inb(x, y)) { S[y][x] = false; G[y][x] = ' '; L[y][x] = 0; } };
-    const BASE = 22;
+    const BASE = 22, O = Math.round((W - 200) / 2);
     // stars: dense at the top, faint behind the cards
     for (let y = 0; y < R; y++) {
       const dens = y < BASE ? 0.05 - y * 0.0022 : 0.004;
@@ -230,8 +233,8 @@ export default class Component extends DCLogic {
     const peak = (x, c, w, hgt) => hgt * Math.exp(-((x - c) * (x - c)) / (2 * w * w));
     const far = [], top = [], near = [];
     for (let x = -1; x <= W + 1; x++) {
-      far.push(BASE - 5 - 2.4 * ridged(x * 1.4 + 40) - peak(x, 92, 16, 2.5) - peak(x, 172, 13, 2.5) - peak(x, 14, 10, 1.5));
-      top.push(BASE - 0.5 - 1.8 * ridged(x) - peak(x, 64, 13, 4.2) - peak(x, 116, 10, 7.5) - peak(x, 100, 7, 3.5) - peak(x, 146, 9, 4.5) - peak(x, 30, 12, 2.2) - peak(x, 178, 10, 2.8));
+      far.push(BASE - 5 - 2.4 * ridged(x * 1.4 + 40) - peak(x - O, 92, 16, 2.5) - peak(x - O, 172, 13, 2.5) - peak(x - O, 14, 10, 1.5));
+      top.push(BASE - 0.5 - 1.8 * ridged(x) - peak(x - O, 64, 13, 4.2) - peak(x - O, 116, 10, 7.5) - peak(x - O, 100, 7, 3.5) - peak(x - O, 146, 9, 4.5) - peak(x - O, 30, 12, 2.2) - peak(x - O, 178, 10, 2.8));
       near.push(BASE + 0.2 - 1.2 * (0.5 + 0.5 * Math.sin(x * 0.045 + 1)) - 0.8 * ridged(x * 2.2 + 11));
     }
     const ridgeCh = (l, t, r) => l > t && r > t ? '^' : (r - l) < -0.35 ? '/' : (r - l) > 0.35 ? '\\' : '_';
@@ -412,17 +415,17 @@ export default class Component extends DCLogic {
       put(x, e, hh(x, 3) < 0.7 ? '~' : '-', 2);
       for (let y = e + 1; y < R; y++) if (hh(x, y) < 0.22) put(x, y, hh(y, x) < 0.5 ? '.' : '·', 1);
     }
-    const PX = 120, DX1 = 174, LX = 191;
+    const O = Math.round((W - 200) / 2), PX = 120 + O, DX1 = 174 + O, LX = 191 + O;
     for (let y = 1; y < 15; y++) for (let x = PX - 2; x < W; x++) { G[y][x] = ' '; L[y][x] = 0; }
     for (let y = 2; y < 12; y++) for (let x = PX - 2; x < LX - 9; x++) if (hh(x, y) < 0.06) put(x, y, '-', 1);
-    const SX0 = 140, SX1 = 158, DY = 12;
+    const SX0 = 140 + O, SX1 = 158 + O, DY = 12;
     for (let x = PX; x <= LX - 8; x++) put(x, DY, '=', 2);
     put(PX - 1, DY, '[', 2);
     for (let x = PX + 2; x < LX - 8; x += 7) if (x < SX0 - 1 || x > SX1 + 1) for (let y = DY + 1; y < DY + 3; y++) put(x, y, '|', 1);
     put(SX0 + 2, DY + 1, '|', 1); put(SX1 - 2, DY + 1, '|', 1);
     const label = ' NEWEST FIRST ', sign = '[' + label.padStart(Math.floor((SX1 - SX0 - 1 + label.length) / 2), ' ').padEnd(SX1 - SX0 - 1, ' ') + ']';
     for (let j = 0; j < sign.length; j++) { const x = SX0 + j, ch = sign[j]; if (ch === ' ') { G[DY + 2][x] = ' '; L[DY + 2][x] = 0; } else put(x, DY + 2, ch, (ch === '[' || ch === ']') ? 2 : 3); }
-    [128, 150, 170].forEach((mx, i) => {
+    [128 + O, 150 + O, 170 + O].forEach((mx, i) => {
       for (let y = 6; y < 11; y++) put(mx, y, '|', 2);
       put(mx + 1, 6, Math.sin(T * 0.9 + i) > 0 ? '>' : '-', 2);
       put(mx + 1, 8, '\\', 1); put(mx + 1, 9, '|', 1);
@@ -471,8 +474,8 @@ export default class Component extends DCLogic {
     }
     put(LX - 2, 3, lampOn > 0.6 ? '(' : ' ', 2); put(LX + 2, 3, lampOn > 0.6 ? ')' : ' ', 2);
     const yachtR = ['          _|_          ', '     ____/[_]\\____     ', ' ___/_[]_[]_[]_[]_\\___ ', ' \\  o  o  o  o  o    / ', '  \\__________________/  '];
-    const YW = yachtR[0].length, span = PX - 6 - YW - 2;
-    const ph = (T * 2.4) % (2 * span), goingRight = ph < span, bx = 2 + Math.round(goingRight ? ph : 2 * span - ph);
+    const YW = yachtR[0].length, span = PX - O - 6 - YW - 2;
+    const ph = (T * 2.4) % (2 * span), goingRight = ph < span, bx = O + 2 + Math.round(goingRight ? ph : 2 * span - ph);
     const flip = (row) => row.split('').reverse().map((ch) => ch === '/' ? '\\' : ch === '\\' ? '/' : ch === '[' ? ']' : ch === ']' ? '[' : ch).join('');
     const yacht = goingRight ? yachtR : yachtR.map(flip);
     const by = 1 + (Math.sin(T * 1.1) > 0.3 ? 1 : 0);
@@ -538,10 +541,10 @@ export default class Component extends DCLogic {
   }
   bgVals() {
     const tick = this.state.t || 0;
-    if (this._fKey !== tick) {
+    if (this._fKey !== tick + ':' + this.cols()) {
       const T = tick * 0.11, out = {};
       this.bgCfg().forEach((f) => { out[f.key] = this.fieldGen(f.kind, f.W, f.R, T); });
-      this._fields = out; this._fKey = tick;
+      this._fields = out; this._fKey = tick + ':' + this.cols();
     }
     return this._fields;
   }
@@ -578,7 +581,7 @@ export default class Component extends DCLogic {
       onHeroMove: (e) => {
         const r = e.currentTarget.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-        this.setState({ mx: px * 200, my: py * 51 - 4 });
+        this.setState({ mx: px * this.cols(), my: py * 51 - 4 });
       },
       onHeroLeave: () => this.setState({ mx: -99, my: -99 }),
       articles: articles, segs: segs,

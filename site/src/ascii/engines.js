@@ -67,7 +67,7 @@ export function sceneGen(kind, W, R, T, tz) {
     sprite([' .-. ', '(   )', " `-' "], W - 20, 3, () => 2, false);
     let x0 = 0, n = 0; const GB = R - 6;
     while (x0 < W) {
-      const w = 5 + Math.floor(hh(n, 1) * 8), right = x0 > TX - 4;
+      const w = 5 + Math.floor(hh(n, 1) * 8), right = x0 > TX - 4 || (tz && tz.x0 > 0 && x0 + w < tz.x0 - 2);
       const h = right ? Math.round(10 + hh(n, 2) * 10 + Math.max(0, 1 - Math.abs((x0 - W * 0.8) / (W * 0.18))) * 12) : Math.round(3 + hh(n, 2) * 5);
       const top = GB - h;
       for (let x = x0; x < x0 + w && x < W; x++) {
@@ -170,7 +170,7 @@ export function sceneGen(kind, W, R, T, tz) {
     for (let j = 0; j < lab.length; j++) put(GX + 1 + j, RT - 2, lab[j], 2);
     put(GX + 1, RT - 3, busy ? 'o' : '.', busy ? 4 : 1); put(GX + GW - 1, RT - 3, busy ? 'o' : '.', busy ? 4 : 1);
   }
-  if (tz) for (let y = 0; y < tz.y && y < R; y++) for (let x = 0; x < tz.x && x < W; x++) { const ch = G[y][x]; if (!(ch === '.' || ch === '·' || ch === '+') || L[y][x] > 2) { G[y][x] = ' '; L[y][x] = 0; } }
+  if (tz) for (let y = 0; y < tz.y && y < R; y++) for (let x = Math.max(0, tz.x0 || 0); x < tz.x && x < W; x++) { const ch = G[y][x]; if (!(ch === '.' || ch === '·' || ch === '+') || L[y][x] > 2) { G[y][x] = ' '; L[y][x] = 0; } }
   const dim = [], mid = [], hi = [], acc = [];
   for (let y = 0; y < R; y++) {
     let a = '', b = '', c = '', d = '';

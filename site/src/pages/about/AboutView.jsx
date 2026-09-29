@@ -7,7 +7,7 @@ const media = (f) => import.meta.env.BASE_URL + 'media/' + f;
 export default function AboutView({ v }) {
   return (
     <div style={{ width: "100%", boxSizing: "border-box", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", background: "#0b0b0a", color: "#ededE8", fontFamily: "'Geist', sans-serif", isolation: "isolate" }} className="board-root">
-      <header className="desk-only" style={{ flexShrink: "0", height: "72px", boxSizing: "border-box", padding: "0 40px", display: "flex", alignItems: "center", gap: "40px", borderBottom: "1px solid #1d1d1b", background: "#0b0b0a" }}>
+      <header className="desk-only" style={{ flexShrink: "0", height: "72px", boxSizing: "border-box", padding: "0 var(--gx40)", display: "flex", alignItems: "center", gap: "40px", borderBottom: "1px solid #1d1d1b", background: "#0b0b0a" }}>
         <Link to="/" aria-label="dev/suite home" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <svg width="30" height="30" viewBox="0 0 48 48" fill="none" aria-hidden="true">
             <path d="M19 8H10V40H19" stroke="#ededE8" strokeWidth="5" />
@@ -40,7 +40,7 @@ export default function AboutView({ v }) {
           {"Join the waitlist"}
         </Link>
       </header>
-      <section className="ab-hero" style={{ position: "relative", isolation: "isolate", overflow: "hidden", flexShrink: "0", height: "848px", boxSizing: "border-box", padding: "104px 80px 0", borderBottom: "1px solid #1d1d1b" }}>
+      <section className="ab-hero" style={{ position: "relative", isolation: "isolate", overflow: "hidden", flexShrink: "0", height: "848px", boxSizing: "border-box", padding: "104px var(--gx) 0", borderBottom: "1px solid #1d1d1b" }}>
         <div aria-hidden="true" style={{ position: "absolute", left: "0", top: "0", right: "0", bottom: "0", zIndex: "-1", overflow: "hidden", pointerEvents: "none", fontFamily: "'Geist Mono', monospace", fontSize: "12px", lineHeight: "16px", whiteSpace: "pre", textShadow: "none" }}>
           <div style={{ position: "absolute", inset: "0", color: "#3a3935" }}>
             {(v.road?.dim || []).map((r, r__i) => (
@@ -118,7 +118,7 @@ export default function AboutView({ v }) {
           </div>
         </div>
       </section>
-      <section className="ab-creator" style={{ flexShrink: "0", padding: "120px 80px", display: "grid", gridTemplateColumns: "minmax(0, 585px) minmax(0, 1fr)", gap: "80px", alignItems: "start", borderBottom: "1px solid #1d1d1b" }}>
+      <section className="ab-creator" style={{ flexShrink: "0", padding: "120px var(--gx)", display: "grid", gridTemplateColumns: "minmax(0, 585px) minmax(0, 1fr)", gap: "80px", alignItems: "start", borderBottom: "1px solid #1d1d1b" }}>
         <figure style={{ margin: "0", position: "relative", border: "1px solid #2f2e2b", padding: "8px", background: "#0e0e0d" }}>
           <div style={{ position: "relative", aspectRatio: "569 / 713", border: "1px solid #262522", overflow: "hidden", background: "#0f1411" }}>
             <video autoPlay muted loop playsInline poster={media('portrait.jpg')} aria-label="Portrait of Tyler Crawford" width="400" height="500" style={{ position: "absolute", inset: "0", width: "100%", height: "100%", objectFit: "cover", display: "block" }}>
@@ -172,7 +172,7 @@ export default function AboutView({ v }) {
           </div>
         </div>
       </section>
-      <section className="ab-miles" style={{ position: "relative", isolation: "isolate", overflow: "hidden", flexShrink: "0", height: "640px", boxSizing: "border-box", padding: "120px 80px 0", display: "flex", flexDirection: "column", gap: "56px", borderBottom: "1px solid #1d1d1b" }}>
+      <section className="ab-miles" style={{ position: "relative", isolation: "isolate", overflow: "hidden", flexShrink: "0", height: "640px", boxSizing: "border-box", padding: "120px var(--gx) 0", display: "flex", flexDirection: "column", gap: "56px", borderBottom: "1px solid #1d1d1b" }}>
         <div aria-hidden="true" style={{ position: "absolute", left: "0", top: "0", right: "0", bottom: "0", zIndex: "-1", overflow: "hidden", pointerEvents: "none", fontFamily: "'Geist Mono', monospace", fontSize: "12px", lineHeight: "16px", whiteSpace: "pre", textShadow: "none" }}>
           <div style={{ position: "absolute", inset: "0", color: "#19231f" }}>
             {(v.fMiles?.dim || []).map((r, r__i) => (
@@ -265,7 +265,7 @@ export default function AboutView({ v }) {
           </div>
         </div>
       </section>
-      <section id="contact" className="ab-contact" style={{ flexGrow: "1", padding: "120px 80px", display: "grid", gridTemplateColumns: "minmax(0, 1fr) 640px", gap: "80px", position: "relative", overflow: "hidden", isolation: "isolate" }}>
+      <section id="contact" className="ab-contact" style={{ flexGrow: "1", padding: "120px var(--gx)", display: "grid", gridTemplateColumns: "minmax(0, 1fr) 640px", gap: "80px", position: "relative", overflow: "hidden", isolation: "isolate" }}>
         <div aria-hidden="true" style={{ position: "absolute", left: "0", top: "0", right: "0", bottom: "0", zIndex: "-1", overflow: "hidden", pointerEvents: "none", fontFamily: "'Geist Mono', monospace", fontSize: "12px", lineHeight: "16px", whiteSpace: "pre", textShadow: "none" }}>
           <div style={{ position: "absolute", inset: "0", color: "#1f2d26" }}>
             {(v.fContact?.dim || []).map((r, r__i) => (
@@ -422,7 +422,7 @@ export default function AboutView({ v }) {
           ) : null}
         </form>
       </section>
-      <footer className="desk-only" style={{ flexShrink: "0", boxSizing: "border-box", padding: "40px 80px 32px", borderTop: "1px solid #1d1d1b", display: "flex", flexDirection: "column", gap: "28px", background: "#0b0b0a" }}>
+      <footer className="desk-only" style={{ flexShrink: "0", boxSizing: "border-box", padding: "40px var(--gx) 32px", borderTop: "1px solid #1d1d1b", display: "flex", flexDirection: "column", gap: "28px", background: "#0b0b0a" }}>
         <nav style={{ display: "flex", gap: "32px", fontSize: "14px" }}>
           <Link to="/#articles" style={{ color: "#9a978f" }}>
             {"Articles"}

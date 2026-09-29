@@ -183,6 +183,8 @@ export function BeforeAfter({ alt, caption, tag }) {
             <div className="cmp-pane after" dangerouslySetInnerHTML={{ __html: deskAfter }} />
             <div className="cmp-pane before" style={{ clipPath: `inset(0 ${((1 - pos) * 100).toFixed(1)}% 0 0)` }} dangerouslySetInnerHTML={{ __html: deskBefore }} />
           </div>
+          <span aria-hidden="true" className="cmp-tag before-tag" style={{ opacity: pos > 0.12 ? 1 : 0 }}>← BEFORE</span>
+          <span aria-hidden="true" className="cmp-tag after-tag" style={{ opacity: pos < 0.88 ? 1 : 0 }}>AFTER →</span>
           <span aria-hidden="true" className="cmp-line" style={{ left: pct }} />
           <span className="knob" role="slider" tabIndex={0} aria-label="Before and after divider" aria-valuemin={0} aria-valuemax={100}
             aria-valuenow={Math.round(pos * 100)} aria-valuetext={Math.round(pos * 100) + '% before'} onKeyDown={key} style={{ left: pct }}>↔</span>

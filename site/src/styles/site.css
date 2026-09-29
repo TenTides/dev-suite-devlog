@@ -4,6 +4,10 @@
   --faint: #6f6c66; --muted: #9a978f; --soft: #b9b6ae; --body: #d6d4ce; --text: #ededE8;
   --signal: #1fbf7f; --signal-hi: #c9f5e0; --amber: #e0a54a;
   --mono: 'Geist Mono', ui-monospace, monospace; --sans: 'Geist', system-ui, sans-serif;
+  /* Side gutters that keep the 1440px design centered on wider screens.
+     The percentage resolves against the element the padding is on. */
+  --gx: max(80px, calc((100% - 1280px) / 2));
+  --gx40: max(40px, calc((100% - 1360px) / 2));
 }
 html, body { background: var(--ink); }
 body { overflow-x: hidden; }
@@ -25,7 +29,7 @@ body { overflow-x: hidden; }
 .eye pre { position: absolute; margin: 0; font: inherit; line-height: inherit; }
 
 /* Site header (article pages) */
-.site-h { position: relative; z-index: 6; height: 72px; box-sizing: border-box; padding: 0 40px; display: flex; align-items: center; gap: 40px; border-bottom: 1px solid var(--rule); background: var(--ink); }
+.site-h { position: relative; z-index: 6; height: 72px; box-sizing: border-box; padding: 0 var(--gx40); display: flex; align-items: center; gap: 40px; border-bottom: 1px solid var(--rule); background: var(--ink); }
 .site-logo { display: flex; align-items: center; gap: 12px; }
 .wordmark { font-family: var(--mono); font-size: 18px; font-weight: 500; letter-spacing: -0.02em; }
 .badge { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: var(--muted); border: 1px solid var(--line-2); padding: 4px 8px; }
@@ -39,7 +43,7 @@ body { overflow-x: hidden; }
 .site-sheet a.btn { margin-top: 16px; min-height: 52px; display: flex; align-items: center; justify-content: center; background: var(--signal); color: #06120c; font-size: 15px; font-weight: 500; border: 0; letter-spacing: 0; }
 
 /* Site footer */
-.site-f { position: relative; box-sizing: border-box; padding: 40px 80px 32px; border-top: 1px solid var(--rule); display: flex; flex-direction: column; gap: 28px; background: var(--ink); }
+.site-f { position: relative; box-sizing: border-box; padding: 40px var(--gx) 32px; border-top: 1px solid var(--rule); display: flex; flex-direction: column; gap: 28px; background: var(--ink); }
 .site-f-nav { display: flex; gap: 32px; font-size: 14px; flex-wrap: wrap; }
 .site-f-nav a { color: var(--muted); }
 .site-f-legal { display: flex; justify-content: space-between; gap: 24px; padding-top: 20px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--faint); }
