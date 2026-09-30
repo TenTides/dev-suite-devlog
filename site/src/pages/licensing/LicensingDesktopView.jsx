@@ -49,7 +49,7 @@ export default function LicensingDesktopView({ v }) {
           {"What you can reuse, and what happens to your email."}
         </h1>
         <p className="rise d2" style={{ margin: "0", maxWidth: "720px", fontSize: "19px", lineHeight: "1.65", color: "#b9b6ae" }}>
-          {"The writing on this log is shared under a Creative Commons licence. The images, the software it describes and the name stay with their owner, nTEG, LLC. The privacy section says exactly what the email forms collect. As of [YYYY-MM-DD]."}
+          {"The writing on this log is shared under a Creative Commons licence. The images, the software it describes and the name stay with their owner, nTEG, LLC. The privacy section says exactly what the email forms collect. As of 2026-09-30."}
         </p>
         <nav aria-label="On this page" style={{ display: "flex", flexWrap: "wrap", gap: "8px", paddingTop: "8px" }}>
           <a href="#licensing" className="btn btn-ghost" style={{ minHeight: "44px", display: "flex", alignItems: "center", padding: "0 16px", border: "1px solid #2f2e2b", fontSize: "14px", color: "#b9b6ae" }}>
@@ -117,7 +117,7 @@ export default function LicensingDesktopView({ v }) {
                 {"EXAMPLE"}
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.7", color: "#d6d4ce", borderLeft: "2px solid #262522", paddingLeft: "14px" }}>
-                {"\"[Article title]\" by Tyler Crawford, \u00a9 2026 nTEG, LLC, [URL], licensed CC BY-NC-ND 4.0."}
+                {"\"Why I built my own coding harness\" by Tyler Crawford, \u00a9 2026 nTEG, LLC, https://tentides.github.io/dev-suite-devlog/articles/why-i-built-my-own-coding-harness, licensed CC BY-NC-ND 4.0."}
               </span>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", fontSize: "14px" }}>
@@ -250,7 +250,7 @@ export default function LicensingDesktopView({ v }) {
               {"WHAT I COLLECT."}
             </span>
             <div style={{ fontSize: "17px", lineHeight: "1.7", color: "#d6d4ce", maxWidth: "760px" }}>
-              {"The email address you enter to join the waitlist or get new articles. If you use the contact form: your name, email and message. [CONFIRM: no analytics or tracking cookies beyond the host's standard logs.]"}
+              {"The email address you enter to join the waitlist or get new articles. If you use the contact form: your name, email and message. This site sets no cookies and runs no analytics or tracking. GitHub Pages, which hosts it, keeps standard server logs, and the fonts load from Google Fonts."}
             </div>
           </li>
           <li style={{ display: "grid", gridTemplateColumns: "56px 240px minmax(0, 1fr)", gap: "24px", padding: "28px 0", borderTop: "1px solid #262522" }}>
@@ -272,7 +272,7 @@ export default function LicensingDesktopView({ v }) {
               {"ON WHAT BASIS."}
             </span>
             <div style={{ fontSize: "17px", lineHeight: "1.7", color: "#d6d4ce", maxWidth: "760px" }}>
-              {"Your consent, given when you submit a form. You're only added to a list after you confirm by email. [CONFIRM: double opt-in is on in the list service.]"}
+              {"Your consent, given when you submit a form. You're only added to a list after you confirm by email."}
             </div>
           </li>
           <li style={{ display: "grid", gridTemplateColumns: "56px 240px minmax(0, 1fr)", gap: "24px", padding: "28px 0", borderTop: "1px solid #262522" }}>
@@ -283,7 +283,7 @@ export default function LicensingDesktopView({ v }) {
               {"WHO HANDLES IT."}
             </span>
             <div style={{ fontSize: "17px", lineHeight: "1.7", color: "#d6d4ce", maxWidth: "760px" }}>
-              {"[LIST SERVICE] stores the lists and sends the emails. [FORM SERVICE] delivers contact messages to me. Neither uses your details for anything else. Both may process them outside the EU, the EEA and the UK (for example, in the US), under their own data-transfer safeguards."}
+              {"Kit (kit.com) stores the lists and sends the emails. Formspree (formspree.io) delivers contact messages to me. Neither uses your details for anything else. Both may process them outside the EU, the EEA and the UK (for example, in the US), under their own data-transfer safeguards."}
             </div>
           </li>
           <li style={{ display: "grid", gridTemplateColumns: "56px 240px minmax(0, 1fr)", gap: "24px", padding: "28px 0", borderTop: "1px solid #262522" }}>
@@ -305,33 +305,7 @@ export default function LicensingDesktopView({ v }) {
               {"YOUR CHOICES."}
             </span>
             <div style={{ fontSize: "17px", lineHeight: "1.7", color: "#d6d4ce", maxWidth: "760px" }}>
-              {"Every list email has a one-click unsubscribe link and the sender's mailing address: [MAILING ADDRESS]."}
-              <ul style={{ margin: "12px 0", padding: "0 0 0 4px", listStyle: "none", display: "flex", flexDirection: "column", gap: "8px", fontSize: "15px", color: "#9a978f" }}>
-                <li style={{ display: "grid", gridTemplateColumns: "14px minmax(0, 1fr)", gap: "8px" }}>
-                  <span aria-hidden="true" style={{ color: "#6f6c66" }}>
-                    {"\u2013"}
-                  </span>
-                  <span>
-                    {"The address goes in the list emails only, never on this site."}
-                  </span>
-                </li>
-                <li style={{ display: "grid", gridTemplateColumns: "14px minmax(0, 1fr)", gap: "8px" }}>
-                  <span aria-hidden="true" style={{ color: "#6f6c66" }}>
-                    {"\u2013"}
-                  </span>
-                  <span>
-                    {"US email law requires it for list email."}
-                  </span>
-                </li>
-                <li style={{ display: "grid", gridTemplateColumns: "14px minmax(0, 1fr)", gap: "8px" }}>
-                  <span aria-hidden="true" style={{ color: "#6f6c66" }}>
-                    {"\u2013"}
-                  </span>
-                  <span>
-                    {"A business address, PO box or mail-receiving service works; never a home address."}
-                  </span>
-                </li>
-              </ul>
+              {"Every list email has a one-click unsubscribe link. "}
               {"You can also ask to see, correct or delete what I hold, or withdraw consent, by writing to "}
               <a href="mailto:tcrawford@nteg.com" style={{ color: "#1fbf7f", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                 {"tcrawford@nteg.com"}
@@ -354,7 +328,7 @@ export default function LicensingDesktopView({ v }) {
           </li>
         </ol>
         <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.16em", color: "#6f6c66" }}>
-          {"AS OF [YYYY-MM-DD]"}
+          {"AS OF 2026-09-30"}
         </span>
       </section>
       <footer style={{ position: "relative", boxSizing: "border-box", padding: "40px var(--gx) 32px", borderTop: "1px solid #1d1d1b", display: "flex", flexDirection: "column", gap: "28px", background: "#0b0b0a" }}>

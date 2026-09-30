@@ -163,7 +163,7 @@ export default function AboutView({ v }) {
             <a href="#contact" onClick={v.pickDemo} className="btn btn-primary" style={{ fontSize: "15px", fontWeight: "500", color: "#06120c", background: "#1fbf7f", padding: "15px 22px" }}>
               {"Request a demo"}
             </a>
-            <a href="[BUY ME A COFFEE URL]" target="_blank" rel="noopener" className="btn btn-ghost" style={{ fontSize: "15px", color: "#b9b6ae", border: "1px solid #2f2e2b", padding: "14px 22px" }}>
+            <a href="https://buymeacoffee.com/tylercrawford" target="_blank" rel="noopener" className="btn btn-ghost" style={{ fontSize: "15px", color: "#b9b6ae", border: "1px solid #2f2e2b", padding: "14px 22px" }}>
               {"Support the build"}
             </a>
             <a href="https://www.linkedin.com/in/tyler-l-crawford" target="_blank" rel="noopener" className="btn btn-ghost" style={{ fontSize: "15px", color: "#b9b6ae", border: "1px solid #2f2e2b", padding: "14px 22px" }}>
@@ -415,10 +415,10 @@ export default function AboutView({ v }) {
                   {"\u2713"}
                 </span>
                 <span style={{ fontSize: "26px", fontWeight: "600", letterSpacing: "-0.02em" }}>
-                  {"Message ready."}
+                  {"Message sent."}
                 </span>
                 <span style={{ fontSize: "15px", color: "#9a978f" }}>
-                  {"Your mail app opened with it. Send it from there, and expect a reply by email."}
+                  {"Thanks for writing. I'll reply to the email you gave."}
                 </span>
               </div>
             </>

@@ -12,7 +12,8 @@ const TITLES = { '/': 'Dev Log · Dev Suite', '/about': 'About · Dev Log', '/li
 function ScrollManager() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
-    if (TITLES[pathname]) document.title = TITLES[pathname];
+    const page = pathname.replace(/(.)\/$/, '$1');
+    if (TITLES[page]) document.title = TITLES[page];
     if (!hash) { window.scrollTo(0, 0); return undefined; }
     let tries = 0;
     const iv = setInterval(() => {

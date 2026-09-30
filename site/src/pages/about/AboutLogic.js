@@ -1,4 +1,5 @@
 import { DCLogic } from '../../dc/runtime.js';
+import { sendMessage } from '../../launch.js';
 
 // Logic ported verbatim from the design board About.dc.html.
 export const defaults = {};
@@ -288,12 +289,11 @@ export default class Component extends DCLogic {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) errs.email = 1;
         if (!v('message')) errs.message = 1;
         if (Object.keys(errs).length) { this.setState({ errs: errs, status: 'idle' }); return; }
-        // Site edit: there is no mail backend on a static site, so the message opens in the
-        // visitor's mail app, addressed to the creator.
-        const subject = (labels[this.state.reason] || 'Message') + ' · from ' + v('name');
-        const body = v('message') + '\n\n' + v('name') + ' <' + v('email') + '>';
-        window.location.href = 'mailto:tcrawford@nteg.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-        this.setState({ errs: {}, status: 'sent' });
+        // Site edit: the message goes out through Formspree (see src/launch.js).
+        this.setState({ errs: {}, status: 'sending' });
+        sendMessage({ name: v('name'), email: v('email'), message: v('message'), topic: labels[this.state.reason] || 'Message' })
+          .then(() => { if (this._alive) this.setState({ status: 'sent' }); })
+          .catch(() => { if (this._alive) this.setState({ status: 'error' }); });
       }
     };
   }

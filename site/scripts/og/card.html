@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box}html,body{margin:0}
+body{width:1200px;height:630px;background:#0b0b0a;color:#ededE8;font-family:Geist,sans-serif;position:relative;overflow:hidden}
+pre{position:absolute;inset:0;margin:0;font:13px/17px 'Geist Mono',monospace;white-space:pre;}
+.l1{color:#16201b}.l2{color:#234a39}.l3{color:#2f8a63}
+.wrap{position:absolute;inset:0;padding:56px 64px;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:14px}
+.wm{font:500 24px 'Geist Mono',monospace;letter-spacing:-.02em}
+.badge{font:13px 'Geist Mono',monospace;letter-spacing:.16em;color:#9a978f;border:1px solid #2f2e2b;padding:5px 9px;background:#0b0b0a}
+.eye{margin-top:auto;font:15px 'Geist Mono',monospace;letter-spacing:.2em;color:#1fbf7f}
+h1{margin:18px 0 0;font-weight:600;letter-spacing:-.045em;line-height:1.02;max-width:980px}
+.sub{color:#6f6c66}
+.meta{margin-top:28px;display:flex;justify-content:space-between;font:14px 'Geist Mono',monospace;letter-spacing:.14em;color:#9a978f;border-top:1px solid #262522;padding-top:18px}
+.fade{position:absolute;inset:0;background:linear-gradient(90deg,#0b0b0a 0%,rgba(11,11,10,.92) 55%,rgba(11,11,10,.35) 100%)}
+.corner{position:absolute;width:18px;height:18px}
+</style></head><body>
+<pre class="l1" id="a"></pre><pre class="l2" id="b"></pre><pre class="l3" id="c"></pre>
+<div class="fade"></div>
+<span class="corner" style="left:20px;top:20px;border-left:2px solid #1fbf7f;border-top:2px solid #1fbf7f"></span>
+<span class="corner" style="right:20px;bottom:20px;border-right:2px solid #1fbf7f;border-bottom:2px solid #1fbf7f"></span>
+<div class="wrap">
+ <div class="bar">
+  <svg width="40" height="40" viewBox="0 0 48 48" fill="none"><path d="M19 8H10V40H19" stroke="#ededE8" stroke-width="5"/><path d="M24 8H30L38 16V32L30 40H24" stroke="#ededE8" stroke-width="5"/><rect x="15" y="31" width="12" height="5" fill="#1fbf7f"/></svg>
+  <span class="wm">dev/suite_</span><span class="badge">DEV LOG</span>
+ </div>
+ <div class="eye" id="eye"></div>
+ <h1 id="t"></h1>
+ <div class="meta"><span id="m1"></span><span id="m2"></span></div>
+</div>
+<script>
+const q=new URLSearchParams(location.search);
+document.getElementById('eye').textContent=q.get('eye');
+const t=document.getElementById('t'); t.innerHTML=q.get('title'); t.style.fontSize=(q.get('size')||'76')+'px';
+document.getElementById('m1').textContent=q.get('m1'); document.getElementById('m2').textContent=q.get('m2');
+// ripple field like the site's backgrounds, brighter toward the right
+const W=160,H=38,a=[],b=[],c=[];const seed=+(q.get('seed')||1);
+for(let y=0;y<H;y++){let ra='',rb='',rc='';for(let x=0;x<W;x++){
+ const r1=Math.hypot((x-140)*0.5,(y-6)), r2=Math.hypot((x-120)*0.5,(y-40));
+ const f1=((r1*0.14-seed*0.3)%1+1)%1, f2=((r2*0.11+seed*0.2)%1+1)%1;
+ const h=Math.abs(Math.sin(x*12.9898+y*78.233+seed)*43758.5453)%1;
+ let A=' ',B=' ',C=' ';
+ if(r1<60&&f1<0.12) (r1<24?C=':':B=h<.5?'*':'+');
+ else if(r2<52&&f2<0.12) (r2<20?C='#':B=h<.5?'=':'-');
+ else if(h<0.05) A=h<.02?'+':'.';
+ ra+=A;rb+=B;rc+=C;}a.push(ra);b.push(rb);c.push(rc);}
+document.getElementById('a').textContent=a.join('\n');document.getElementById('b').textContent=b.join('\n');document.getElementById('c').textContent=c.join('\n');
+</script></body></html>

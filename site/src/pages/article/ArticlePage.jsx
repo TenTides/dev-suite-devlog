@@ -10,6 +10,7 @@ import SiteHeader from '../../components/SiteHeader.jsx';
 import SiteFooter from '../../components/SiteFooter.jsx';
 import * as W from '../../components/article/Widgets.jsx';
 import NotFound from '../NotFound.jsx';
+import { subscribe, EMAIL_RE, CONTACT_EMAIL, SITE_URL } from '../../launch.js';
 
 // Headings get ids s1..sN from the post's section list, matched by their text. The component
 // must be defined once (not per render), or React remounts every heading on each update.
@@ -80,7 +81,7 @@ function Hero({ post, phone }) {
 
 function Share({ post }) {
   const [copied, setCopied] = useState(false);
-  const url = typeof window !== 'undefined' ? window.location.href.split('#')[0] : '';
+  const url = SITE_URL + '/articles/' + post.slug + '/';
   const copy = () => {
     if (navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {});
     setCopied(true);
@@ -130,7 +131,16 @@ function NextSection({ post, phone }) {
   const ref = useRef(null);
   const t = useTick(ref);
   const w = useWidth(ref);
-  const [sent, setSent] = useState(false);
+  // idle | invalid | sending | sent | error
+  const [sent, setSent] = useState('idle');
+  const onSubscribe = (e) => {
+    e.preventDefault();
+    if (sent === 'sending') return;
+    const email = (e.currentTarget.elements.namedItem('email')?.value || '').trim();
+    if (!EMAIL_RE.test(email)) { setSent('invalid'); return; }
+    setSent('sending');
+    subscribe('articles', email).then(() => setSent('sent'), () => setSent('error'));
+  };
   const cw = (phone ? 11 : 12) * 0.6, lh = phone ? 14 : 16;
   const [h, setH] = useState(480);
   useLayoutEffect(() => {
@@ -161,16 +171,18 @@ function NextSection({ post, phone }) {
       <AsciiLayers layers={f} colors={FIELD_COLORS} fontSize={phone ? 11 : 12} lineHeight={lh} label={phone ? null : 'FIELD · SIGNAL'} />
       {nextPost ? <Link to={'/articles/' + nextPost.slug} className="card next-card">{card}</Link>
         : <Link to="/#articles" className="card next-card">{card}</Link>}
-      <form className="sub" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+      <form className="sub" noValidate onSubmit={onSubscribe}>
         <span className="sub-title">Get the next article by email.</span>
         {post.subscribe ? <span className="sub-note">{post.subscribe}</span> : null}
-        {sent ? <span className="sub-done">✓ Subscribed. See you at the next entry.</span> : (
+        {sent === 'sent' ? <span className="sub-done">✓ Almost there. Check your inbox and confirm your email.</span> : (
           <div className="sub-row">
             <label htmlFor="nl" className="sr-only">Email</label>
-            <input id="nl" type="email" required placeholder="you@company.com" />
-            <button type="submit" className="btn btn-primary">Subscribe</button>
+            <input id="nl" name="email" type="email" autoComplete="email" aria-invalid={sent === 'invalid' || sent === 'error' ? 'true' : 'false'} placeholder="you@company.com" />
+            <button type="submit" className="btn btn-primary" disabled={sent === 'sending'}>{sent === 'sending' ? 'Sending…' : 'Subscribe'}</button>
           </div>
         )}
+        {sent === 'invalid' ? <span className="sub-err" role="alert">Enter a valid email address.</span> : null}
+        {sent === 'error' ? <span className="sub-err" role="alert">That didn't go through. Try again in a moment, or email {CONTACT_EMAIL}.</span> : null}
         <Link to="/#follow" className="sub-alt">Or join the Dev Suite waitlist →</Link>
       </form>
     </section>

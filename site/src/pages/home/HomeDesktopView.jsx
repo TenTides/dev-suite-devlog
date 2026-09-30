@@ -248,9 +248,6 @@ export default function HomeDesktopView({ v }) {
                     <span style={{ position: "absolute", left: "24px", bottom: "6px", fontSize: "220px", fontWeight: "700", letterSpacing: "-0.06em", lineHeight: "1", color: "transparent", WebkitTextStroke: "1px #3a3935" }}>
                       {a?.n}
                     </span>
-                    <span style={{ position: "absolute", right: "14px", top: "14px", fontFamily: "'Geist Mono', monospace", fontSize: "10px", letterSpacing: "0.18em", color: "#9a978f", background: "#0b0b0a", border: "1px solid #2f2e2b", padding: "5px 8px" }}>
-                      {"[BANNER IMAGE]"}
-                    </span>
                     <span style={{ position: "absolute", left: "-1px", top: "-1px", width: "14px", height: "14px", borderLeft: "2px solid #1fbf7f", borderTop: "2px solid #1fbf7f" }} />
                     <span style={{ position: "absolute", right: "-1px", bottom: "-1px", width: "14px", height: "14px", borderRight: "2px solid #1fbf7f", borderBottom: "2px solid #1fbf7f" }} />
                   </div>
@@ -422,7 +419,7 @@ export default function HomeDesktopView({ v }) {
           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.16em", lineHeight: "1.9", color: "#6f6c66" }}>
             {"SIMPLIFIED, NOT A BLUEPRINT \u00b7 CLICK ANY BLOCK \u00b7 SKILL = BUILT INTO THE AGENTS' SKILLS \u00b7 PLANNED = NOT BUILT YET \u00b7"}
             <br />
-            {"LESSONS ARE KEPT BY GITMEM, MADE BY nTEG LABS; I'M PART OF THE TEAM THAT BUILDS IT \u00b7 AS OF [YYYY-MM-DD]"}
+            {"LESSONS ARE KEPT BY GITMEM, MADE BY nTEG LABS; I'M PART OF THE TEAM THAT BUILDS IT \u00b7 AS OF 2026-09-30"}
           </span>
         </div>
       </section>
@@ -574,7 +571,7 @@ export default function HomeDesktopView({ v }) {
                 {"Want a demo, or want to talk about the work? Write to the creator."}
               </span>
             </Link>
-            <a href="[BUY ME A COFFEE URL]" target="_blank" rel="noopener" className="card" style={{ border: "1px solid #262522", background: "#111110", padding: "24px", display: "flex", flexDirection: "column", gap: "10px" }}>
+            <a href="https://buymeacoffee.com/tylercrawford" target="_blank" rel="noopener" className="card" style={{ border: "1px solid #262522", background: "#111110", padding: "24px", display: "flex", flexDirection: "column", gap: "10px" }}>
               <span style={{ fontSize: "17px", fontWeight: "600" }}>
                 {"Support the build "}
                 <span className="go">
@@ -610,11 +607,16 @@ export default function HomeDesktopView({ v }) {
                     {"EMAIL"}
                   </label>
                   <div style={{ display: "flex", gap: "8px" }}>
-                    <input id="email" type="email" placeholder="you@company.com" style={{ flexGrow: "1", minHeight: "52px", boxSizing: "border-box", padding: "0 16px", background: "#0b0b0a", border: "1px solid #2f2e2b", color: "#ededE8", fontFamily: "'Geist', sans-serif", fontSize: "15px", transition: "border-color .2s ease" }} />
-                    <button type="submit" className="btn btn-primary" style={{ minHeight: "52px", padding: "0 22px", border: "0", background: "#1fbf7f", color: "#06120c", fontFamily: "'Geist', sans-serif", fontSize: "15px", fontWeight: "500", cursor: "pointer" }}>
+                    <input id="email" name="email" type="email" autoComplete="email" aria-invalid={v.formErr ? "true" : "false"} placeholder="you@company.com" style={{ flexGrow: "1", minHeight: "52px", boxSizing: "border-box", padding: "0 16px", background: "#0b0b0a", border: "1px solid #2f2e2b", color: "#ededE8", fontFamily: "'Geist', sans-serif", fontSize: "15px", transition: "border-color .2s ease" }} />
+                    <button type="submit" disabled={v.busy} className="btn btn-primary" style={{ minHeight: "52px", padding: "0 22px", border: "0", background: "#1fbf7f", color: "#06120c", fontFamily: "'Geist', sans-serif", fontSize: "15px", fontWeight: "500", cursor: "pointer" }}>
                       {v.cta}
                     </button>
                   </div>
+                  {v.formErr ? (
+                    <span role="alert" style={{ fontSize: "13px", lineHeight: "1.5", color: "#ff9a8e" }}>
+                      {v.formErr}
+                    </span>
+                  ) : null}
                 </div>
               </>
             ) : null}

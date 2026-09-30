@@ -324,7 +324,7 @@ export default function HomePhoneView({ v }) {
           {"Every agent is assembled from the shared library: its persona, skills, MCP servers and sandbox setup. Before the plan is written and before each agent starts, it checks memory and knowledge: past lessons in gitmem, a map of the code, and a knowledge graph of the work in flight. Lessons are kept by gitmem, made by nTEG Labs; I'm part of the team that builds it."}
         </span>
         <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "10px", lineHeight: "1.6", letterSpacing: "0.14em", color: "#6f6c66" }}>
-          {"FIVE INTERACTIVE VIEWS ON A LARGER SCREEN \u00b7 AS OF [YYYY-MM-DD]"}
+          {"FIVE INTERACTIVE VIEWS ON A LARGER SCREEN \u00b7 AS OF 2026-09-30"}
         </span>
       </section>
       <section style={{ padding: "56px 16px", display: "flex", flexDirection: "column", gap: "8px", borderBottom: "1px solid #1d1d1b" }}>
@@ -403,10 +403,15 @@ export default function HomePhoneView({ v }) {
                 <label htmlFor="me" style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.18em", color: "#9a978f" }}>
                   {"EMAIL"}
                 </label>
-                <input id="me" type="email" placeholder="you@company.com" style={{ minHeight: "52px", padding: "0 14px", background: "#0b0b0a", border: "1px solid #2f2e2b", color: "#ededE8", fontFamily: "'Geist', sans-serif", fontSize: "16px" }} />
-                <button type="submit" style={{ minHeight: "52px", border: "0", background: "#1fbf7f", color: "#06120c", fontFamily: "'Geist', sans-serif", fontSize: "15px", fontWeight: "500", cursor: "pointer" }}>
+                <input id="me" name="email" type="email" autoComplete="email" aria-invalid={v.formErr ? "true" : "false"} placeholder="you@company.com" style={{ minHeight: "52px", padding: "0 14px", background: "#0b0b0a", border: "1px solid #2f2e2b", color: "#ededE8", fontFamily: "'Geist', sans-serif", fontSize: "16px" }} />
+                <button type="submit" disabled={v.busy} style={{ minHeight: "52px", border: "0", background: "#1fbf7f", color: "#06120c", fontFamily: "'Geist', sans-serif", fontSize: "15px", fontWeight: "500", cursor: "pointer" }}>
                   {v.cta}
                 </button>
+                {v.formErr ? (
+                  <span role="alert" style={{ fontSize: "13px", lineHeight: "1.5", color: "#ff9a8e" }}>
+                    {v.formErr}
+                  </span>
+                ) : null}
               </>
             ) : null}
             {v.sent ? (
@@ -432,7 +437,7 @@ export default function HomePhoneView({ v }) {
           <Link to="/about#contact" style={{ minHeight: "52px", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #2f2e2b", fontSize: "14px", color: "#b9b6ae" }}>
             {"Get in touch"}
           </Link>
-          <a href="[BUY ME A COFFEE URL]" target="_blank" rel="noopener" style={{ minHeight: "52px", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #2f2e2b", fontSize: "14px", color: "#b9b6ae" }}>
+          <a href="https://buymeacoffee.com/tylercrawford" target="_blank" rel="noopener" style={{ minHeight: "52px", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #2f2e2b", fontSize: "14px", color: "#b9b6ae" }}>
             {"Support the build"}
           </a>
         </div>

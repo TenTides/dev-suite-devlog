@@ -1,4 +1,5 @@
 import { DCLogic } from '../../dc/runtime.js';
+import { subscribe, EMAIL_RE, CONTACT_EMAIL } from '../../launch.js';
 
 // Logic ported verbatim from the design board Main.dc.html.
 export const defaults = {};
@@ -609,15 +610,27 @@ export default class Component extends DCLogic {
       resume: () => this.setState({ paused: false, start: this.state.t }),
       ...this.archVals(),
       tabA: wl ? on : off, tabB: wl ? off : on,
-      pickWaitlist: () => this.setState({ mode: 'waitlist', sent: false }),
-      pickArticles: () => this.setState({ mode: 'articles', sent: false }),
+      pickWaitlist: () => this.setState({ mode: 'waitlist', sent: false, status: 'idle' }),
+      pickArticles: () => this.setState({ mode: 'articles', sent: false, status: 'idle' }),
       fine: wl ? 'Email only, used to tell you when the beta opens. Unsubscribe any time.' : 'One email per article. Unsubscribe any time.',
       formTitle: wl ? 'Join the waitlist' : 'Get new articles',
       formBody: wl ? 'Early access when Dev Suite opens to its first users.' : 'An email when a new entry is published. Nothing else.',
-      cta: wl ? 'Join' : 'Subscribe',
+      cta: s.status === 'sending' ? 'Sending…' : wl ? 'Join' : 'Subscribe',
       notSent: !s.sent, sent: s.sent,
-      doneText: wl ? 'You are on the list.' : 'Subscribed. See you at the next entry.',
-      submit: (e) => { e.preventDefault(); this.setState({ sent: true }); }
+      doneText: 'Almost there. Check your inbox and confirm your email.',
+      submit: (e) => {
+        e.preventDefault();
+        if (this.state.status === 'sending') return;
+        const el = e.currentTarget.elements.namedItem('email'), email = ((el && el.value) || '').trim();
+        if (!EMAIL_RE.test(email)) { this.setState({ status: 'invalid' }); return; }
+        const list = this.state.mode;
+        this.setState({ status: 'sending' });
+        subscribe(list, email)
+          .then(() => { if (this._alive) this.setState({ status: 'sent', sent: true }); })
+          .catch(() => { if (this._alive) this.setState({ status: 'error' }); });
+      },
+      busy: s.status === 'sending',
+      formErr: s.status === 'invalid' ? 'Enter a valid email address.' : s.status === 'error' ? "That didn't go through. Try again in a moment, or email " + CONTACT_EMAIL + '.' : null
     };
   }
 }
