@@ -419,8 +419,10 @@ export default function HomeDesktopView({ v }) {
               </div>
             </div>
           </div>
-          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.16em", color: "#6f6c66" }}>
-            {"SIMPLIFIED, NOT A BLUEPRINT \u00b7 CLICK ANY BLOCK \u00b7 SKILL = BUILT INTO THE AGENTS' SKILLS \u00b7 PLANNED = NOT BUILT YET \u00b7 AS OF [YYYY-MM-DD]"}
+          <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.16em", lineHeight: "1.9", color: "#6f6c66" }}>
+            {"SIMPLIFIED, NOT A BLUEPRINT \u00b7 CLICK ANY BLOCK \u00b7 SKILL = BUILT INTO THE AGENTS' SKILLS \u00b7 PLANNED = NOT BUILT YET \u00b7"}
+            <br />
+            {"LESSONS ARE KEPT BY GITMEM, MADE BY nTEG LABS; I'M PART OF THE TEAM THAT BUILDS IT \u00b7 AS OF [YYYY-MM-DD]"}
           </span>
         </div>
       </section>

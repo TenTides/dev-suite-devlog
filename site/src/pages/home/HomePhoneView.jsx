@@ -237,7 +237,7 @@ export default function HomePhoneView({ v }) {
                 </span>
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-                {"The approved plan is cut into slices, each scoped to its own part of the code, so agents working in parallel never collide."}
+                {"The conductor cuts the approved plan into slices, each scoped to its own part of the code, so agents working in parallel never collide."}
               </span>
             </span>
           </li>
@@ -315,13 +315,13 @@ export default function HomePhoneView({ v }) {
                 </span>
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-                {"It merges once every check passes. Whatever went wrong along the way is written into memory for next time."}
+                {"It merges once every check passes. Whatever went wrong along the way is written into gitmem for next time."}
               </span>
             </span>
           </li>
         </ol>
         <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-          {"Before the plan is written and before each agent starts, it checks memory: past lessons, a map of the code, and a knowledge graph of the work in flight."}
+          {"Every agent is assembled from the shared library: its persona, skills, MCP servers and sandbox setup. Before the plan is written and before each agent starts, it checks memory and knowledge: past lessons in gitmem, a map of the code, and a knowledge graph of the work in flight. Lessons are kept by gitmem, made by nTEG Labs; I'm part of the team that builds it."}
         </span>
         <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "10px", lineHeight: "1.6", letterSpacing: "0.14em", color: "#6f6c66" }}>
           {"FIVE INTERACTIVE VIEWS ON A LARGER SCREEN \u00b7 AS OF [YYYY-MM-DD]"}

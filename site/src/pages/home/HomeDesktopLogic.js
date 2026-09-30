@@ -55,20 +55,22 @@ export default class Component extends DCLogic {
     return { dim, mid, hi };
   }
   diagrams() {
-    // node: [id, tag, label, x, y, w, description] · edge: [from, to, verb, route ('h' | 'v' | ''), planned]
+    // node: [id, tag, label, x, y, w, description] · edge: [from, to, verb, route ('h' | 'v' | ''), planned, land]
+    // land (optional) moves where the line meets its target, in px along that edge, so two lines into one side don't share an arrowhead.
     const fanIn = (froms, to, verb, route) => froms.map((f) => [f, to, verb, route || '']);
     return [
       { title: 'THE PATH', hint: 'PLAN TO MERGE, ONE FEATURE', frames: [], nodes: [
         ['plan', 'SKILL', 'Written plan', 40, 110, 160, "Every feature starts as a written plan, not a prompt: what changes, why, and how you'll know it worked."],
         ['attack', 'SKILL', 'Cross-validated', 250, 110, 160, 'Independent AI reviewers try to break the plan before any code exists, checking every claim against the real code. A plan that fails goes back to be rewritten.'],
-        ['split', 'PLAN', 'Split into slices', 460, 110, 160, 'The approved plan is cut into slices, each scoped to its own part of the code, so agents working in parallel never collide.'],
+        ['split', 'PLAN', 'Split into slices', 460, 110, 160, 'The conductor cuts the approved plan into slices, each scoped to its own part of the code, so agents working in parallel never collide.'],
         ['green', 'YOU', 'Green-lit', 670, 110, 160, 'You see what each slice may touch, sign off on anything risky, and release the deploy.'],
         ['build', 'SANDBOX', 'Built', 670, 370, 160, "Each agent builds its slice in its own copy of the code, inside its workspace's sandbox, with only the permissions its slice needs."],
         ['watch', 'LIVE', 'Watched live', 460, 370, 160, 'A live view shows what every agent is doing, what it touched and how it ended. You can step in at any time.'],
         ['check', 'CHECK', 'Checked', 250, 370, 160, "A reviewer who didn't write the code gives it an adversarial review, and linting, type checks and the full back-end test suite at 100% coverage must pass. Where it matters, a live drill proves it on the real system and the result is measured, not assumed. Anything that fails goes back to its agent."],
-        ['done', 'DONE', 'Merged', 40, 370, 160, 'It merges once every check passes. Whatever went wrong along the way is written into memory for next time.'],
-        ['memory', 'MEMORY', 'Memory', 355, 240, 170, 'Checked before the plan is written and before each agent starts: past lessons, a map of the code, and a knowledge graph of the work in flight.']
-      ], edges: [['plan', 'attack', 'reviewed by', ''], ['attack', 'split', 'approved', ''], ['split', 'green', 'proposed', ''], ['green', 'build', 'releases', ''], ['build', 'watch', 'reports to', ''], ['watch', 'check', 'hands over', ''], ['check', 'done', 'confirms', ''], ['memory', 'plan', 'informs', 'v'], ['done', 'memory', 'writes lessons to', 'v']] },
+        ['done', 'DONE', 'Merged', 40, 370, 160, 'It merges once every check passes. Whatever went wrong along the way is written into gitmem for next time.'],
+        ['memory', 'MEMORY', 'Memory and knowledge', 355, 240, 170, 'Checked before the plan is written and before each agent starts: past lessons in gitmem, a map of the code, and a knowledge graph of the work in flight.'],
+        ['library', 'CATALOG', 'Library', 560, 240, 130, 'Every agent is assembled from the shared library: its persona, skills, MCP servers and sandbox setup.']
+      ], edges: [['plan', 'attack', 'reviewed by', ''], ['attack', 'split', 'approved', ''], ['split', 'green', 'proposed', ''], ['green', 'build', 'releases', ''], ['build', 'watch', 'reports to', ''], ['watch', 'check', 'hands over', ''], ['check', 'done', 'confirms', ''], ['memory', 'plan', 'informs', 'v'], ['done', 'memory', 'writes lessons to', 'v'], ['library', 'build', 'equips', 'v']] },
       { title: 'THE SYSTEM', hint: 'WHO DOES WHAT, ACROSS WORKSPACES',
         frames: [
           { x: 462, y: 30, w: 160, h: 236, label: 'WORKSPACE A · OWN SANDBOX' },
@@ -77,7 +79,7 @@ export default class Component extends DCLogic {
         ['you', 'YOU', 'You', 16, 40, 128, 'Set the guardrails for each deploy, green-light it, and step in at any time.'],
         ['app', 'APP', 'Dev Suite application', 16, 248, 128, 'One application window for every workspace. Plan, stage, approve and watch several projects at once, each in its own sandbox, all under the same governance.'],
         ['live', 'LIVE', 'Live view', 16, 436, 128, "Started by the server. It tracks every running agent (what it's doing, what it touched, how it ended) and streams that into the application."],
-        ['memory', 'MEMORY', 'Memory and knowledge', 164, 40, 128, 'Past lessons, a navigation map of the code, and a knowledge graph of the work in flight. The conductor and every agent check it before they start. Lessons are kept by gitmem, made by nTEG Labs.'],
+        ['memory', 'MEMORY', 'Memory and knowledge', 164, 40, 128, 'Past lessons in gitmem, a navigation map of the code, and a knowledge graph of the work in flight. The conductor checks it before planning, and every agent checks it before starting.'],
         ['server', 'SERVER', 'Dev Suite server', 164, 248, 128, "The engine behind the application. It keeps every workspace's state, starts the live view, and turns an approved deploy into running agents."],
         ['library', 'CATALOG', 'Library', 164, 436, 128, 'One shared catalog of skills, personas, MCP servers and sandbox setups, used by every workspace.'],
         ['conductor', 'CONDUCTOR', 'Conductor agents', 312, 40, 128, 'The orchestrating agents. A conductor turns an approved plan into slices, stages them for your green light, then merges the finished work back and cleans up. A conductor living inside each workspace is next.'],
@@ -87,7 +89,7 @@ export default class Component extends DCLogic {
         ['b1', 'AGENT', 'Build agent', 478, 326, 128, 'A second project, running at the same time. Each workspace gets its own sandbox and its own guardrails.'],
         ['b2', 'AGENT', 'Build agent', 478, 446, 128, "Agents never share a copy of the code or talk to each other, so parallel work doesn't collide."],
         ['prs', 'OUTPUT', 'Pull requests', 700, 248, 150, "Finished work lands as pull requests on each project's branch. Nothing merges until the checks pass."]
-      ], edges: [['you', 'app', 'works in', 'v'], ['memory', 'app', 'feeds', ''], ['memory', 'conductor', 'checked before planning', 'h'], ['app', 'server', 'green-lights', 'h'], ['library', 'server', 'supplies', 'v'], ['server', 'live', 'starts', ''], ['live', 'app', 'streams into', 'v'], ['conductor', 'check', 'stages slices', 'v'], ['server', 'check', 'launches through', 'h'], ['check', 'a1', 'releases', 'h'], ['check', 'b1', 'releases', 'h']]
+      ], edges: [['you', 'app', 'works in', 'v'], ['memory', 'app', 'shown in', ''], ['memory', 'conductor', 'checked before planning', 'h'], ['app', 'server', 'green-lights', 'h'], ['library', 'server', 'supplies', 'v'], ['library', 'conductor', 'supplies personas to', 'h', false, 18], ['server', 'live', 'starts', ''], ['live', 'app', 'streams into', 'v'], ['conductor', 'check', 'stages slices', 'v'], ['server', 'check', 'launches through', 'h'], ['check', 'a1', 'releases', 'h'], ['check', 'a2', 'releases', 'h'], ['check', 'b1', 'releases', 'h'], ['check', 'b2', 'releases', 'h']]
         .concat(fanIn(['a1', 'a2', 'b1', 'b2'], 'prs', 'opens', 'h')) },
       { title: 'INSIDE THE SANDBOX', hint: 'WHAT ONE AGENT GETS', frames: [], nodes: [
         ['engine', 'ENGINE', 'Engine', 20, 60, 180, 'What actually runs the agent, and it can be swapped. The default engine runs build agents today, and a second engine, OpenCode, already runs interactive agents.'],
@@ -95,37 +97,40 @@ export default class Component extends DCLogic {
         ['local', 'PLANNED', 'Local models', 20, 436, 180, 'Models you host yourself, in a container next to the agents: no per-token bill, same guardrails. Next.'],
         ['persona', 'SETUP', 'Persona', 230, 60, 180, "The agent's role and setup: what kind of agent it is, which model it uses, and how much it may decide on its own."],
         ['agent', 'AGENT', 'Coding agent', 230, 248, 180, "The agent doing the work, running unattended inside its workspace's sandbox."],
-        ['mcp', 'TOOLS', 'MCP servers', 230, 436, 180, 'The outside tools it may call, and only the ones its persona declares.'],
+        ['mcp', 'TOOLS', 'MCP servers', 230, 436, 180, 'The outside tools it may call, only the ones its persona declares, such as gitmem for past lessons, code navigation and the knowledge graph.'],
         ['perms', 'GUARDRAIL', 'Permissions', 450, 60, 180, "What it's allowed to do, such as network access or installing packages. Anything not granted is refused, and risky grants were signed off before launch."],
         ['copy', 'CODE', 'Its own copy of the code', 450, 248, 180, "A private working copy of the project. Its changes stay there until they're reviewed, and its slice keeps it off other agents' files."],
         ['exit', 'NETWORK', 'One approved way out', 450, 436, 180, 'The only route to the internet, and only to allowed sites. Everything else is blocked by default.'],
         ['tool', 'BUILT', 'Tool-level limits', 670, 40, 180, "Built. The agent's own tools refuse any action its slice wasn't granted."],
         ['os', 'PLANNED', 'OS-level wall', 670, 130, 180, "Planned. A harder boundary beneath the tools, so even a program the agent starts can't step outside."],
-        ['out', 'OUTPUT', 'One result', 670, 248, 180, 'A build agent finishes with one pull request; a review agent finishes with a written report.']
-      ], edges: [['engine', 'agent', 'runs', 'v'], ['local', 'agent', 'can run it (next)', 'v', true], ['slice', 'agent', 'given', ''], ['persona', 'agent', 'configures', ''], ['mcp', 'agent', 'attached to', ''], ['perms', 'agent', 'limits', 'h'], ['perms', 'tool', 'enforced by', 'h'], ['perms', 'os', 'planned', 'h', true], ['agent', 'copy', 'works in', ''], ['copy', 'out', 'ends in', ''], ['agent', 'exit', 'reaches out only through', 'h']] },
-      { title: 'THE LIBRARY', hint: 'WHAT A DEPLOY IS BUILT FROM', frame: false, nodes: [
+        ['out', 'OUTPUT', 'One result', 670, 248, 180, 'A build agent finishes with one pull request; a review agent finishes with a written report.'],
+        ['flow', 'PLANNED', 'Data-flow guard', 670, 436, 180, "Planned. Permissions decide which actions an agent may take, but not what data it carries while taking them. A data-flow guard would make a deterministic check before every tool call: is this data allowed to go to this destination? That stops private data leaking through an action that was itself allowed, the combination of private data, untrusted content and a way out that makes agents dangerous."]
+      ], edges: [['flow', 'exit', 'would guard', 'h', true],['engine', 'agent', 'runs', 'v'], ['local', 'agent', 'can run it (next)', 'v', true], ['slice', 'agent', 'given', ''], ['persona', 'agent', 'configures', ''], ['mcp', 'agent', 'attached to', ''], ['perms', 'agent', 'limits', 'h'], ['perms', 'tool', 'enforced by', 'h'], ['perms', 'os', 'planned', 'h', true], ['agent', 'copy', 'works in', ''], ['copy', 'out', 'ends in', ''], ['agent', 'exit', 'reaches out only through', 'h']] },
+      { title: 'THE LIBRARY', hint: 'WHAT A DEPLOY IS BUILT FROM', frames: [], nodes: [
         ['lib', 'CATALOG', 'Library', 355, 248, 170, "One shared catalog across every workspace. It can index any workspace and bring that project's know-how into the catalog. Everything a deploy uses is picked from here."],
-        ['skills', 'KNOW-HOW', 'Skills', 60, 70, 170, 'Written procedures agents follow: conventions, review, QA, plans, wrap-up.'],
+        ['skills', 'KNOW-HOW', 'Skills', 60, 70, 170, 'Written procedures agents follow: planning, cross-validation, code review, QA, conventions and wrap-up.'],
         ['creator', 'AUTHOR', 'Agent creator', 650, 70, 170, 'Author, configure and deploy personas.'],
         ['configs', 'PERSONAS', 'Agent configurations', 60, 248, 170, 'Saved personas: batch workers, chat agents, reviewers.'],
         ['setups', 'SETUP', 'Sandbox setups', 650, 248, 170, 'The ready-made environments agents start in.'],
-        ['mcps', 'TOOLS', 'MCP servers', 60, 426, 170, 'Tool servers a persona may declare.'],
+        ['mcps', 'TOOLS', 'MCP servers', 60, 426, 170, 'Tool servers a persona may declare, such as gitmem, which every workspace shares.'],
         ['spaces', 'SCOPE', 'Workspaces', 650, 426, 170, 'Each project Dev Suite manages, with its own branch and sandbox.']
       ], edges: [['skills', 'lib', 'feeds', ''], ['configs', 'lib', 'feeds', ''], ['mcps', 'lib', 'feeds', ''], ['creator', 'lib', 'feeds', ''], ['setups', 'lib', 'feeds', ''], ['spaces', 'lib', 'feeds', '']] },
       { title: 'MEMORY BEFORE WORK', hint: 'WHAT AN AGENT CHECKS BEFORE IT STARTS', frames: [], nodes: [
         ['task', 'INPUT', 'New task', 20, 248, 170, 'An agent is handed a slice to build. Before it touches anything, it checks memory.'],
-        ['lessons', 'MEMORY', 'Past lessons', 250, 60, 170, "Mistakes and near-misses from earlier work, each written down once. Kept by gitmem, made by nTEG Labs; I'm part of the team that builds it."],
+        ['lessons', 'MEMORY', 'Past lessons', 250, 60, 170, 'Mistakes and near-misses from earlier work, each written down once in gitmem.'],
         ['codemap', 'MEMORY', 'Code navigation', 250, 248, 170, 'A map of the codebase, so the agent finds what it needs without reading everything. In a measured test it cut token use by about 40%.'],
         ['graph', 'MEMORY', 'Knowledge graph', 250, 436, 170, 'A shared graph of the work in flight, so the agent knows what else is changing around it.'],
-        ['answer', 'ANSWER', 'Lessons answered', 480, 60, 170, "For every lesson that applies, the agent must say: applying it, not applicable, or knowingly overriding it. It can't skip one silently."],
+        ['answer', 'ANSWER', 'Lessons answered', 480, 60, 170, "For every lesson that applies, the agent must say: applying it, not applicable, or knowingly overriding it, and the answer is recorded in gitmem. It can't skip one silently."],
         ['work', 'WORK', 'Work starts', 690, 248, 170, 'Only now does the agent start building, with the lessons answered and the map in hand.'],
-        ['later', 'LESSON', 'Written down', 690, 436, 170, 'If something goes wrong, it is written down once and becomes a lesson for the next task.']
+        ['later', 'LESSON', 'Written down', 690, 436, 170, "If something goes wrong, it's written into gitmem once and becomes a lesson for the next task."]
       ], edges: [['task', 'lessons', 'checks', 'v'], ['task', 'codemap', 'checks', 'h'], ['task', 'graph', 'checks', 'v'], ['lessons', 'answer', 'must answer', 'h'], ['answer', 'work', 'then', 'v'], ['codemap', 'work', 'guides', 'h'], ['graph', 'work', 'informs', 'h'], ['work', 'later', 'afterwards', 'v']] }
     ];
   }
-  edgePath(a, b, route) {
+  edgePath(a, b, route, land) {
     const H = 64;
-    const ax = a[3] + a[5] / 2, ay = a[4] + H / 2, bx = b[3] + b[5] / 2, by = b[4] + H / 2;
+    const ax = a[3] + a[5] / 2, ay = a[4] + H / 2;
+    const horizLand = route === 'h' || (route !== 'v' && Math.abs(b[3] + b[5] / 2 - ax) >= Math.abs(b[4] + H / 2 - ay) * 0.9);
+    const bx = b[3] + b[5] / 2 + (horizLand ? 0 : land || 0), by = b[4] + H / 2 + (horizLand ? land || 0 : 0);
     const dx = bx - ax, dy = by - ay;
     const horiz = route === 'h' ? true : route === 'v' ? false : Math.abs(dx) >= Math.abs(dy) * 0.9;
     if (horiz) {
@@ -167,7 +172,7 @@ export default class Component extends DCLogic {
       const a = N[byId[e[0]]], b = N[byId[e[1]]];
       const hot = e[0] === sid || e[1] === sid, planned = !!e[4];
       return {
-        d: this.edgePath(a, b, e[3]),
+        d: this.edgePath(a, b, e[3], e[5]),
         stroke: planned ? FAINT : hot ? GREEN : '#34332f',
         dash: planned ? '2 6' : '3 3',
         anim: planned ? 'none' : 'flow 1.1s linear infinite',
