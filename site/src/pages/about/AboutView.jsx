@@ -96,7 +96,7 @@ export default function AboutView({ v }) {
               </span>
               <span style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "15px" }}>
                 <span className="pulse" style={{ width: "7px", height: "7px", background: "#1fbf7f" }} />
-                {"Back end in active build"}
+                {"Refining the guardrails and memory"}
               </span>
             </div>
             <div style={{ flex: "1", padding: "16px 20px", borderLeft: "1px solid #262522", display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -104,7 +104,7 @@ export default function AboutView({ v }) {
                 {"NEXT"}
               </span>
               <span style={{ fontSize: "15px" }}>
-                {"Front end refactor"}
+                {"Local-model orchestration, alongside refining the current setup"}
               </span>
             </div>
             <div style={{ flex: "1", padding: "16px 0 16px 20px", borderLeft: "1px solid #262522", display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -254,16 +254,19 @@ export default function AboutView({ v }) {
           <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "14px", paddingRight: "32px" }}>
             <span style={{ width: "15px", height: "15px", boxSizing: "border-box", background: "#1fbf7f" }} />
             <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.16em", color: "#6f6c66" }}>
-              {"2026-09-25"}
+              {"2026-08"}
             </span>
             <span style={{ fontSize: "17px", fontWeight: "600", lineHeight: "1.3" }}>
-              {"360+ problems caught before code"}
+              {"Several projects at once"}
             </span>
             <span style={{ fontSize: "14px", lineHeight: "1.6", color: "#9a978f" }}>
-              {"Reviewers attacking plans caught more than 360 blocking problems before a line was written; 275 pull requests merged, 0 rolled back."}
+              {"Separate repositories, each in its own sandbox, running their own agent deploys at the same time, from one application window, under the same governance."}
             </span>
           </div>
         </div>
+        <p className="ab-miles-note" style={{ margin: "0", maxWidth: "760px", fontSize: "13px", lineHeight: "1.6", color: "#6f6c66" }}>
+          {"Since June 5, 2026, reviewers attacking plans have caught more than 360 blocking problems before any code was written, and 275 pull requests have merged with none rolled back (as of Sept 25, 2026)."}
+        </p>
       </section>
       <section id="contact" className="ab-contact" style={{ flexGrow: "1", padding: "120px var(--gx)", display: "grid", gridTemplateColumns: "minmax(0, 1fr) 640px", gap: "80px", position: "relative", overflow: "hidden", isolation: "isolate" }}>
         <div aria-hidden="true" style={{ position: "absolute", left: "0", top: "0", right: "0", bottom: "0", zIndex: "-1", overflow: "hidden", pointerEvents: "none", fontFamily: "'Geist Mono', monospace", fontSize: "12px", lineHeight: "16px", whiteSpace: "pre", textShadow: "none" }}>
