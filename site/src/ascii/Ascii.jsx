@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { subscribeViewport } from '../useViewportWidth.js';
 
 const reduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -19,16 +20,20 @@ export function useTick(ref, ms = 70) {
   return t;
 }
 
-// Width of the element in pixels, updated on resize.
+// Width of the element in pixels. Measured when the element mounts, whenever it resizes, on any
+// viewport change, and re-checked after each render (the animated sections re-render every frame),
+// so a section never keeps a width captured earlier.
 export function useWidth(ref) {
   const [w, setW] = useState(0);
+  const measure = () => { const el = ref.current; if (el) { const x = el.getBoundingClientRect().width; setW((p) => (p === x ? p : x)); } };
+  useLayoutEffect(measure);
   useEffect(() => {
     const el = ref.current;
     if (!el) return undefined;
-    const ro = new ResizeObserver(() => setW(el.getBoundingClientRect().width));
-    ro.observe(el);
-    setW(el.getBoundingClientRect().width);
-    return () => ro.disconnect();
+    const ro = 'ResizeObserver' in window ? new ResizeObserver(measure) : null;
+    if (ro) ro.observe(el);
+    const off = subscribeViewport(measure);
+    return () => { if (ro) ro.disconnect(); off(); };
   }, [ref]);
   return w;
 }

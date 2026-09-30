@@ -17,7 +17,7 @@ export default class Component extends DCLogic {
   }
   componentWillUnmount() { clearInterval(this.iv); this.stopBg(); }
   field() {
-    const W = 60, H = 42, T = this.state.t * 0.09;
+    const W = this.cols(), H = 42, T = this.state.t * 0.09;
     const dim = [], mid = [], hi = [];
     for (let y = 0; y < H; y++) {
       let a = '', b = '', c = '';
@@ -39,7 +39,9 @@ export default class Component extends DCLogic {
     }
     return { dim, mid, hi };
   }
-  bgCfg() { return [{ key: 'fFeat', kind: 'plasma', W: 60, R: 40 }, { key: 'fFollow', kind: 'ripple', W: 60, R: 46 }]; }
+  // Site edit: fields span the viewport (11px mono is 6.6px a column); 60 columns on a 390px phone.
+  cols() { return Math.max(60, Math.ceil((this.props.width || 390) / 6.6) + 1); }
+  bgCfg() { return [{ key: 'fFeat', kind: 'plasma', W: this.cols(), R: 40 }, { key: 'fFollow', kind: 'ripple', W: this.cols(), R: 46 }]; }
   startBg() {
     this.fT = 0;
     if (false) this.bgIv = setInterval(() => { this.fT += 1; this.setState({ fTick: this.fT }); }, 70);
@@ -91,10 +93,10 @@ export default class Component extends DCLogic {
   }
   bgVals() {
     const tick = this.state.t || 0;
-    if (this._fKey !== tick) {
+    if (this._fKey !== tick + ':' + this.cols()) {
       const T = tick * 0.11, out = {};
       this.bgCfg().forEach((f) => { out[f.key] = this.fieldGen(f.kind, f.W, f.R, T); });
-      this._fields = out; this._fKey = tick;
+      this._fields = out; this._fKey = tick + ':' + this.cols();
     }
     return this._fields;
   }
