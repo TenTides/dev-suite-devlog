@@ -339,14 +339,14 @@ export default function HomeDesktopView({ v }) {
                 </span>
               </div>
               <div style={{ position: "relative", width: "880px", height: "560px", border: "1px solid #262522", backgroundImage: "radial-gradient(#1b1b19 1px, transparent 1px)", backgroundSize: "16px 16px", overflow: "hidden" }}>
-                {v.frameOn ? (
-                  <>
-                    <div aria-hidden="true" style={{ position: "absolute", left: "600px", top: "100px", width: "152px", height: "350px", boxSizing: "border-box", border: "1px dashed #1fbf7f", opacity: "0.7", pointerEvents: "none" }} />
-                    <span style={{ position: "absolute", left: "600px", top: "82px", fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.14em", color: "#6f6c66", pointerEvents: "none" }}>
-                      {"WORKSPACE SANDBOX"}
+                {(v.frames || []).map((f, f__i) => (
+                  <React.Fragment key={f__i}>
+                    <div aria-hidden="true" style={{ position: "absolute", left: f.x + "px", top: f.y + "px", width: f.w + "px", height: f.h + "px", boxSizing: "border-box", border: "1px dashed #1fbf7f", opacity: "0.7", pointerEvents: "none" }} />
+                    <span style={{ position: "absolute", left: f.x + "px", top: (f.y - 16) + "px", fontFamily: "'Geist Mono', monospace", fontSize: "10px", letterSpacing: "0.12em", color: "#6f6c66", pointerEvents: "none", whiteSpace: "nowrap" }}>
+                      {f.label}
                     </span>
-                  </>
-                ) : null}
+                  </React.Fragment>
+                ))}
                 <svg width="880" height="560" viewBox="0 0 880 560" fill="none" style={{ position: "absolute", left: "0", top: "0" }}>
                   {(v.edges || []).map((e, e__i) => (
                     <React.Fragment key={e__i}>

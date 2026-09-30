@@ -204,7 +204,7 @@ export default function HomePhoneView({ v }) {
                 </span>
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-                {"Each feature starts as a written plan, not a prompt."}
+                {"Every feature starts as a written plan, not a prompt: what changes, why, and how you'll know it worked."}
               </span>
             </span>
           </li>
@@ -215,14 +215,14 @@ export default function HomePhoneView({ v }) {
             <span style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
               <span style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px" }}>
                 <span style={{ fontSize: "18px", fontWeight: "600", letterSpacing: "-0.015em" }}>
-                  {"Attacked"}
+                  {"Cross-validated"}
                 </span>
                 <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "10px", letterSpacing: "0.14em", color: "#1fbf7f", border: "1px solid #1fbf7f", padding: "2px 6px" }}>
                   {"SKILL"}
                 </span>
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-                {"Cross-validation: independent AI reviewers try to break the plan before any code exists, using methods from published research on code inspection and checking every claim against the real code. A rejected plan goes back to be revised."}
+                {"Independent AI reviewers try to break the plan before any code exists, checking every claim against the real code. A plan that fails goes back to be rewritten."}
               </span>
             </span>
           </li>
@@ -237,7 +237,7 @@ export default function HomePhoneView({ v }) {
                 </span>
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-                {"The approved plan is cut into slices, scoped from the start so parallel agents never collide."}
+                {"The approved plan is cut into slices, each scoped to its own part of the code, so agents working in parallel never collide."}
               </span>
             </span>
           </li>
@@ -270,7 +270,7 @@ export default function HomePhoneView({ v }) {
                 </span>
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-                {"Each agent builds its slice in its own isolated copy of the code, inside the workspace's sandbox, with only its own permissions. Agents don't talk to each other."}
+                {"Each agent builds its slice in its own copy of the code, inside its workspace's sandbox, with only the permissions its slice needs."}
               </span>
             </span>
           </li>
@@ -300,7 +300,7 @@ export default function HomePhoneView({ v }) {
                 </span>
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-                {"An adversarial code review, scaled to the size of the change, by a reviewer who didn't write the code and uses the same research-grounded methods. Plus linting, type checks and the full back-end test suite at 100% coverage. Anything that fails goes back to its agent."}
+                {"A reviewer who didn't write the code gives it an adversarial review, and linting, type checks and the full back-end test suite at 100% coverage must pass. Where it matters, a live drill proves it on the real system and the result is measured, not assumed. Anything that fails goes back to its agent."}
               </span>
             </span>
           </li>
@@ -311,15 +311,18 @@ export default function HomePhoneView({ v }) {
             <span style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
               <span style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px" }}>
                 <span style={{ fontSize: "18px", fontWeight: "600", letterSpacing: "-0.015em" }}>
-                  {"Merged, remembered"}
+                  {"Merged"}
                 </span>
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-                {"It merges once the checks pass. What went wrong is written down and checked before the next risky step."}
+                {"It merges once every check passes. Whatever went wrong along the way is written into memory for next time."}
               </span>
             </span>
           </li>
         </ol>
+        <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
+          {"Before the plan is written and before each agent starts, it checks memory: past lessons, a map of the code, and a knowledge graph of the work in flight."}
+        </span>
         <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "10px", lineHeight: "1.6", letterSpacing: "0.14em", color: "#6f6c66" }}>
           {"FIVE INTERACTIVE VIEWS ON A LARGER SCREEN \u00b7 AS OF [YYYY-MM-DD]"}
         </span>
