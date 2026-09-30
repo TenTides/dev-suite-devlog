@@ -13,12 +13,12 @@ export const LINKEDIN_URL = 'https://www.linkedin.com/in/tyler-l-crawford';
 // One form per list. Turn on "Send incentive email" for both, so nobody is added until they
 // confirm by email (the privacy section promises this).
 export const KIT_FORMS = {
-  waitlist: '',
-  articles: '',
+  waitlist: '9986080', // Kit form "Waitlist" (embed uid 1f3dc98917)
+  articles: '9986069', // Kit form "Join the Newsletter" (embed uid d1f3a1f704)
 };
 
 // Formspree (formspree.io) form ID: the part after /f/ in the form's endpoint.
-export const FORMSPREE_ID = '';
+export const FORMSPREE_ID = 'xwlpzyyq';
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
