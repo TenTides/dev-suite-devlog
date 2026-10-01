@@ -321,7 +321,7 @@ export default function HomePhoneView({ v }) {
           </li>
         </ol>
         <span style={{ fontSize: "15px", lineHeight: "1.6", color: "#9a978f" }}>
-          {"Every agent is assembled from the shared library: its persona, skills, MCP servers and sandbox setup. Before the plan is written and before each agent starts, it checks memory and knowledge: past lessons in gitmem, a map of the code, and a knowledge graph of the work in flight. Lessons are kept by gitmem, made by nTEG Labs; I'm part of the team that builds it."}
+          {"Every agent is assembled from the shared library: its persona, skills, MCP servers and sandbox setup. Before the plan is written and before each agent starts, it checks memory and knowledge: past lessons in gitmem, a map of the code, and a knowledge graph of the work in flight. Lessons are kept by gitmem; I'm part of the team that builds it."}
         </span>
         <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "10px", lineHeight: "1.6", letterSpacing: "0.14em", color: "#6f6c66" }}>
           {"FIVE INTERACTIVE VIEWS ON A LARGER SCREEN \u00b7 AS OF 2026-09-30"}
@@ -458,7 +458,7 @@ export default function HomePhoneView({ v }) {
           </Link>
         </span>
         <span>
-          {"\u00a9 2026 nTEG, LLC. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY."}
+          {"\u00a9 2026 TYLER CRAWFORD. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY."}
         </span>
         <span>
           {"EVERY ENTRY IS DATED. NONE DESCRIBES THE PRESENT."}

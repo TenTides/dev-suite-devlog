@@ -5,7 +5,7 @@
 // The public address of the site, used for share links and social preview cards.
 export const SITE_URL = 'https://tentides.github.io/dev-suite-devlog';
 
-export const CONTACT_EMAIL = 'tcrawford@nteg.com';
+export const CONTACT_EMAIL = 'tyler007crawford@gmail.com';
 export const BMC_URL = 'https://buymeacoffee.com/tylercrawford';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/tyler-l-crawford';
 

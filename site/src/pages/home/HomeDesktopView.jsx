@@ -419,7 +419,7 @@ export default function HomeDesktopView({ v }) {
           <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.16em", lineHeight: "1.9", color: "#6f6c66" }}>
             {"SIMPLIFIED, NOT A BLUEPRINT \u00b7 CLICK ANY BLOCK \u00b7 SKILL = BUILT INTO THE AGENTS' SKILLS \u00b7 PLANNED = NOT BUILT YET \u00b7"}
             <br />
-            {"LESSONS ARE KEPT BY GITMEM, MADE BY nTEG LABS; I'M PART OF THE TEAM THAT BUILDS IT \u00b7 AS OF 2026-09-30"}
+            {"LESSONS ARE KEPT BY GITMEM; I'M PART OF THE TEAM THAT BUILDS IT \u00b7 AS OF 2026-09-30"}
           </span>
         </div>
       </section>
@@ -672,7 +672,7 @@ export default function HomeDesktopView({ v }) {
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", paddingTop: "24px", borderTop: "1px solid #1d1d1b", fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.12em", color: "#6f6c66" }}>
           <span>
-            {"\u00a9 2026 nTEG, LLC. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY."}
+            {"\u00a9 2026 TYLER CRAWFORD. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY."}
           </span>
           <span>
             {"EVERY ENTRY IS DATED. NONE DESCRIBES THE PRESENT."}

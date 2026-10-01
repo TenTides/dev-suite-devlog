@@ -195,7 +195,7 @@ function Licence() {
       <span className="cc">cc</span>
       <div>
         <span className="lic-title">Text licensed CC BY-NC-ND 4.0</span>
-        <span className="lic-body">Share this article with credit, unchanged, and not for commercial use. Images and demo video are © nTEG, LLC unless noted. Nothing here licenses the Dev Suite software. <Link to="/licensing#licensing">Licensing →</Link></span>
+        <span className="lic-body">Share this article with credit, unchanged, and not for commercial use. Images and demo video are © Tyler Crawford unless noted. Nothing here licenses the Dev Suite software. <Link to="/licensing#licensing">Licensing →</Link></span>
       </div>
     </div>
   );

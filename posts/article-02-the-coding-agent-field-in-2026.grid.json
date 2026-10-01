@@ -90,7 +90,7 @@
     "Each workspace has its own sandbox. Inside it, each agent's work is isolated in its own copy of the code, with its own permissions, rather than on a machine of its own.",
     "Its slices are scoped from the start so agents never collide, and in four months they never have. The scoping is by design, not a tool-level wall.",
     "Fresh-context review and done-on-exit are built; a live working/done status built from outside facts is still in progress.",
-    "Its lessons are carried by gitmem, made by nTEG Labs. The author is part of the team that builds it, and its lead beta tester."
+    "Its lessons are carried by gitmem. The author is part of the team that builds it, and its lead beta tester."
   ],
   "alt": "An eight-column grid scoring five tool families against eight parts of an agent's working lifecycle. Every family scores well on running many agents at once. Spec-driven tools score a full mark on checking the plan before code, and session managers on proving work is done outside the agent. Dev Suite is the only row with a full mark on all three of plan, permissions from the task, and \"done\" proven outside the agent.",
   "caption": "What the field ships, and what nobody documents as one system, as of September 2026. Some families reach one end of the lifecycle or the other. None but one covers all three: checking the plan, sizing permissions to the task, and proving \"done\".",

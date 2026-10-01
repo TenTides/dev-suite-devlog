@@ -31,7 +31,7 @@ form and a new-article email goes to the New articles form.
 
 ## 2. Formspree: contact messages
 
-1. Create a Formspree account with `tcrawford@nteg.com` and confirm that address.
+1. Create a Formspree account with `tyler007crawford@gmail.com` and confirm that address.
 2. Create a new form. Its endpoint looks like `https://formspree.io/f/abcdwxyz`. The part after
    `/f/` is the ID. Paste it into `FORMSPREE_ID`.
 3. Send yourself a test message from the About page. Each message arrives by email with the

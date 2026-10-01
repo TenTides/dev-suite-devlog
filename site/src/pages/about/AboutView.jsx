@@ -378,8 +378,8 @@ export default function AboutView({ v }) {
                     </span>
                     <span>
                       {"That didn't send. Try again, or email "}
-                      <a href="mailto:tcrawford@nteg.com" style={{ color: "#ffb3aa", textDecoration: "underline", textUnderlineOffset: "3px" }}>
-                        {"tcrawford@nteg.com"}
+                      <a href="mailto:tyler007crawford@gmail.com" style={{ color: "#ffb3aa", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                        {"tyler007crawford@gmail.com"}
                       </a>
                       {"."}
                     </span>
@@ -442,7 +442,7 @@ export default function AboutView({ v }) {
         </nav>
         <div style={{ display: "flex", justifyContent: "space-between", paddingTop: "20px", borderTop: "1px solid #1d1d1b", fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.12em", color: "#6f6c66" }}>
           <span>
-            {"\u00a9 2026 nTEG, LLC. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY."}
+            {"\u00a9 2026 TYLER CRAWFORD. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY."}
           </span>
           <span>
             {"EVERY ENTRY IS DATED. NONE DESCRIBES THE PRESENT."}

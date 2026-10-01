@@ -62,7 +62,7 @@ const page = (meta) => shell.replace(BLOCK, head(meta));
 const pages = [
   { path: '/', title: 'Dev Log · Dev Suite', description: 'Notes from building Dev Suite, a governance harness for AI coding agents: agents in sandboxes, plans attacked before code, and nothing merged on an agent\'s word.', image: card('default') },
   { path: '/about/', title: 'About · Dev Log', description: 'Productive AI agents, held accountable from the plan to the merge. Who builds Dev Suite, where it stands, and how to get in touch.', image: card('default') },
-  { path: '/licensing/', title: 'Licensing & privacy · Dev Log', description: 'How the writing on this log may be shared, what stays with nTEG, LLC, and exactly what the email forms collect.', image: card('default') },
+  { path: '/licensing/', title: 'Licensing & privacy · Dev Log', description: 'How the writing on this log may be shared, what stays with the author, and exactly what the email forms collect.', image: card('default') },
   ...posts.map((p) => ({ path: '/articles/' + p.slug + '/', title: p.title + ' · Dev Log', description: p.standfirst || p.title, image: card(p.slug), type: 'article', published: p.date })),
 ];
 

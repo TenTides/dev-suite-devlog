@@ -13,4 +13,4 @@ npm install
 npm run dev
 ```
 
-© 2026 nTEG, LLC. Article text is licensed CC BY-NC-ND 4.0. The Dev Suite software is proprietary.
+© 2026 Tyler Crawford. Article text is licensed CC BY-NC-ND 4.0. The Dev Suite software is proprietary.

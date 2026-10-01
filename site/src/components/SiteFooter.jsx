@@ -11,7 +11,7 @@ export default function SiteFooter() {
         <Link to="/about#contact">Contact</Link>
       </nav>
       <div className="site-f-legal">
-        <span>© 2026 nTEG, LLC. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY.</span>
+        <span>© 2026 TYLER CRAWFORD. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY.</span>
         <span>EVERY ENTRY IS DATED. NONE DESCRIBES THE PRESENT.</span>
       </div>
     </footer>

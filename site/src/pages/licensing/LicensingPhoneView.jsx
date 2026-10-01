@@ -32,7 +32,7 @@ export default function LicensingPhoneView({ v }) {
           {"What you can reuse, and what happens to your email."}
         </h1>
         <p className="rise d2" style={{ margin: "0", maxWidth: "720px", fontSize: "17px", lineHeight: "1.65", color: "#b9b6ae" }}>
-          {"The writing on this log is shared under a Creative Commons licence. The images, the software it describes and the name stay with their owner, nTEG, LLC. The privacy section says exactly what the email forms collect. As of 2026-09-30."}
+          {"Dev Suite and this log are a solo project by Tyler Crawford. The writing is shared under a Creative Commons licence; the images, the software it describes and the name stay with me. The privacy section says exactly what the email forms collect. As of 2026-10-01."}
         </p>
         <nav aria-label="On this page" style={{ display: "flex", flexWrap: "wrap", gap: "8px", paddingTop: "8px" }}>
           <a href="#licensing" className="btn btn-ghost" style={{ minHeight: "44px", display: "flex", alignItems: "center", padding: "0 16px", border: "1px solid #2f2e2b", fontSize: "14px", color: "#b9b6ae" }}>
@@ -100,7 +100,7 @@ export default function LicensingPhoneView({ v }) {
                 {"EXAMPLE"}
               </span>
               <span style={{ fontSize: "15px", lineHeight: "1.7", color: "#d6d4ce", borderLeft: "2px solid #262522", paddingLeft: "14px" }}>
-                {"\"Why I built my own coding harness\" by Tyler Crawford, \u00a9 2026 nTEG, LLC, https://tentides.github.io/dev-suite-devlog/articles/why-i-built-my-own-coding-harness, licensed CC BY-NC-ND 4.0."}
+                {"\"Why I built my own coding harness\" by Tyler Crawford, \u00a9 2026 Tyler Crawford, https://tentides.github.io/dev-suite-devlog/articles/why-i-built-my-own-coding-harness, licensed CC BY-NC-ND 4.0."}
               </span>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", fontSize: "14px" }}>
@@ -118,7 +118,7 @@ export default function LicensingPhoneView({ v }) {
             </span>
             <span aria-hidden="true" style={{ height: "1px", background: "#262522" }} />
             <span style={{ fontSize: "22px", fontWeight: "600", lineHeight: "1.2", letterSpacing: "-0.02em" }}>
-              {"\u00a9 2026 nTEG, LLC, all rights reserved."}
+              {"\u00a9 2026 Tyler Crawford, all rights reserved."}
             </span>
             <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr)", gap: "24px", fontSize: "15px", lineHeight: "1.6" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -157,7 +157,7 @@ export default function LicensingPhoneView({ v }) {
             </span>
             <span aria-hidden="true" style={{ height: "1px", background: "#262522" }} />
             <p style={{ margin: "0", fontSize: "15px", lineHeight: "1.7", color: "#b9b6ae" }}>
-              {"\"Dev Suite\" and its logo belong to nTEG, LLC. Please don't use them in a way that suggests endorsement or a partnership that doesn't exist."}
+              {"\"Dev Suite\" and its logo belong to Tyler Crawford. Please don't use them in a way that suggests endorsement or a partnership that doesn't exist."}
             </p>
           </div>
           <div style={{ background: "#0b0b0a", padding: "24px 20px", display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -175,7 +175,7 @@ export default function LicensingPhoneView({ v }) {
             </span>
             <span aria-hidden="true" style={{ height: "1px", background: "#262522" }} />
             <p style={{ margin: "0", fontSize: "15px", lineHeight: "1.7", color: "#b9b6ae" }}>
-              {"The articles are drafted from the project's own records; the opinions are the author's, and every number is checked against its source. gitmem, the memory system the articles describe, is made by nTEG Labs; the author is part of the team that builds it, and its lead beta tester. Dev Suite and this site belong to nTEG, LLC. No tool named on this site sponsors it."}
+              {"The articles are drafted from the project's own records; the opinions are the author's, and every number is checked against its source. gitmem, the memory system the articles describe, is a separate tool; the author is part of the team that builds it, and its lead beta tester. Dev Suite and this site are a solo project by Tyler Crawford. No tool named on this site sponsors it."}
             </p>
           </div>
           <div style={{ background: "#0b0b0a", padding: "24px 20px", display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -184,19 +184,19 @@ export default function LicensingPhoneView({ v }) {
             </span>
             <span aria-hidden="true" style={{ height: "1px", background: "#262522" }} />
             <span style={{ fontSize: "22px", fontWeight: "600", lineHeight: "1.2", letterSpacing: "-0.02em" }}>
-              {"\u00a9 2026 nTEG, LLC. All rights reserved."}
+              {"\u00a9 2026 Tyler Crawford. All rights reserved."}
             </span>
           </div>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "12px 24px", fontSize: "14px", color: "#9a978f" }}>
           <span>
             {"Questions about reuse? "}
-            <a href="mailto:tcrawford@nteg.com" style={{ color: "#1fbf7f" }}>
-              {"tcrawford@nteg.com"}
+            <a href="mailto:tyler007crawford@gmail.com" style={{ color: "#1fbf7f" }}>
+              {"tyler007crawford@gmail.com"}
             </a>
           </span>
-          <a href="https://nteg.com/" target="_blank" rel="noopener" style={{ color: "#1fbf7f" }}>
-            {"nTEG \u2197"}
+          <a href="https://www.linkedin.com/in/tyler-l-crawford" target="_blank" rel="noopener" style={{ color: "#1fbf7f" }}>
+            {"LinkedIn \u2197"}
           </a>
         </div>
       </section>
@@ -220,9 +220,9 @@ export default function LicensingPhoneView({ v }) {
               </span>
             </span>
             <div style={{ fontSize: "16px", lineHeight: "1.7", color: "#d6d4ce" }}>
-              {"Tyler Crawford, for nTEG, LLC \u00b7 "}
-              <a href="mailto:tcrawford@nteg.com" style={{ color: "#1fbf7f", textDecoration: "underline", textUnderlineOffset: "3px" }}>
-                {"tcrawford@nteg.com"}
+              {"Tyler Crawford, the solo developer behind Dev Suite \u00b7 "}
+              <a href="mailto:tyler007crawford@gmail.com" style={{ color: "#1fbf7f", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                {"tyler007crawford@gmail.com"}
               </a>
               {"."}
             </div>
@@ -304,8 +304,8 @@ export default function LicensingPhoneView({ v }) {
             <div style={{ fontSize: "16px", lineHeight: "1.7", color: "#d6d4ce" }}>
               {"Every list email has a one-click unsubscribe link. "}
               {"You can also ask to see, correct or delete what I hold, or withdraw consent, by writing to "}
-              <a href="mailto:tcrawford@nteg.com" style={{ color: "#1fbf7f", textDecoration: "underline", textUnderlineOffset: "3px" }}>
-                {"tcrawford@nteg.com"}
+              <a href="mailto:tyler007crawford@gmail.com" style={{ color: "#1fbf7f", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                {"tyler007crawford@gmail.com"}
               </a>
               {". If you're in the EU, the EEA or the UK, you can also complain to your data-protection authority."}
             </div>
@@ -320,14 +320,14 @@ export default function LicensingPhoneView({ v }) {
               </span>
             </span>
             <div style={{ fontSize: "16px", lineHeight: "1.7", color: "#d6d4ce" }}>
-              <a href="mailto:tcrawford@nteg.com" style={{ color: "#1fbf7f", textDecoration: "underline", textUnderlineOffset: "3px" }}>
-                {"tcrawford@nteg.com"}
+              <a href="mailto:tyler007crawford@gmail.com" style={{ color: "#1fbf7f", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                {"tyler007crawford@gmail.com"}
               </a>
             </div>
           </li>
         </ol>
         <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: "11px", letterSpacing: "0.16em", color: "#6f6c66" }}>
-          {"AS OF 2026-09-30"}
+          {"AS OF 2026-10-01"}
         </span>
       </section>
       <footer style={{ position: "relative", boxSizing: "border-box", padding: "24px 16px", borderTop: "1px solid #1d1d1b", display: "flex", flexDirection: "column", gap: "12px", fontFamily: "'Geist Mono', monospace", fontSize: "10px", lineHeight: "1.6", letterSpacing: "0.1em", color: "#6f6c66" }}>
@@ -346,7 +346,7 @@ export default function LicensingPhoneView({ v }) {
           </Link>
         </span>
         <span>
-          {"\u00a9 2026 nTEG, LLC. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY."}
+          {"\u00a9 2026 TYLER CRAWFORD. ARTICLE TEXT CC BY-NC-ND 4.0. DEV SUITE SOFTWARE IS PROPRIETARY."}
         </span>
         <span>
           {"EVERY ENTRY IS DATED. NONE DESCRIBES THE PRESENT."}
