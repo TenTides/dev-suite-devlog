@@ -192,7 +192,7 @@ export default function LicensingDesktopView({ v }) {
             </span>
             <span aria-hidden="true" style={{ height: "1px", background: "#262522" }} />
             <p style={{ margin: "0", fontSize: "15px", lineHeight: "1.7", color: "#b9b6ae" }}>
-              {"Gitmem, the memory system the articles describe, is made by nTEG Labs; the author is part of the team that builds it, and its lead beta tester. Dev Suite and this site belong to nTEG, LLC. [CONFIRM: say how nTEG Labs relates to nTEG, LLC, if the author wants that stated.] No tool named on this site sponsors it."}
+              {"Gitmem, the memory system the articles describe, is made by nTEG Labs; the author is part of the team that builds it, and its lead beta tester. Dev Suite and this site belong to nTEG, LLC. No tool named on this site sponsors it."}
             </p>
           </div>
           <div style={{ background: "#0b0b0a", padding: "36px", display: "flex", flexDirection: "column", gap: "20px" }}>
