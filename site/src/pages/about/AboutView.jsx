@@ -151,7 +151,7 @@ export default function AboutView({ v }) {
               {"Claude Code, Cursor and the other harnesses I'd been using made agents fast. What they didn't give me was a way to trust a team of them, so I built that layer."}
               <br />
               <br />
-              {"Currently, this is a private project, but I may release it as open source or as a paid product. If you are curious about the internal technical or would like to potentially get involved, please feel free to reach out!"}
+              {"Currently, this is a private project, but I may release it as open source or as a paid product. If you are curious about the technicals or would like to potentially get involved, please feel free to reach out!"}
               <br />
               <br />
               <br />
