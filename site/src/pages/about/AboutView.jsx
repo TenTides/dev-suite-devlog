@@ -121,9 +121,9 @@ export default function AboutView({ v }) {
       <section className="ab-creator" style={{ flexShrink: "0", padding: "120px var(--gx)", display: "grid", gridTemplateColumns: "minmax(0, 585px) minmax(0, 1fr)", gap: "80px", alignItems: "start", borderBottom: "1px solid #1d1d1b" }}>
         <figure style={{ margin: "0", position: "relative", border: "1px solid #2f2e2b", padding: "8px", background: "#0e0e0d" }}>
           <div style={{ position: "relative", aspectRatio: "569 / 713", border: "1px solid #262522", overflow: "hidden", background: "#0f1411" }}>
-            <video autoPlay muted loop playsInline poster={media('portrait.jpg')} aria-label="Portrait of Tyler Crawford" width="400" height="500" style={{ position: "absolute", inset: "0", width: "100%", height: "100%", objectFit: "cover", display: "block" }}>
-              <source src={media('portrait.webm')} type="video/webm" />
-              <source src={media('portrait.mp4')} type="video/mp4" />
+            <video autoPlay muted loop playsInline poster={media('portrait-2026-10.jpg')} aria-label="Portrait of Tyler Crawford" width="400" height="500" style={{ position: "absolute", inset: "0", width: "100%", height: "100%", objectFit: "cover", display: "block" }}>
+              <source src={media('portrait-2026-10.webm')} type="video/webm" />
+              <source src={media('portrait-2026-10.mp4')} type="video/mp4" />
             </video>
           </div>
           <span style={{ position: "absolute", left: "-1px", top: "-1px", width: "16px", height: "16px", borderLeft: "2px solid #1fbf7f", borderTop: "2px solid #1fbf7f" }} />
