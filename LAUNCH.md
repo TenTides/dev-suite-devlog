@@ -83,7 +83,7 @@ from a local preview.
 
 ## New article checklist
 
-1. Add `posts/article-NN-<slug>.mdx` (front matter format in `README.md`), with its `date:`.
+1. Add `posts/article-NN-<slug>.mdx`, copying the front matter of an existing article, with its `date:`.
 2. Update the previous article's `next:` line.
 3. Make its card (above), or let it use the default.
 4. Build, publish, then send the new-article email from Kit to the **New articles** form's
